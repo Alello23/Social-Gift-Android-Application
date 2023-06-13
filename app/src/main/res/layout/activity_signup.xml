@@ -114,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Have an account? Sign in"
-        android:textColor="@color/blue"
+        android:textColor="@color/red"
         app:layout_constraintStart_toStartOf="@+id/SU_PasswordBox"
         app:layout_constraintTop_toBottomOf="@+id/SU_PasswordBox" />
 

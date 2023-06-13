@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Acción a realizar cuando se hace clic en el texto
                 // Puedes colocar aquí el código que deseas ejecutar al hacer clic
-                Intent intent = new Intent(MainActivity.this, SignUp.class);
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Intent intent = new Intent(MainActivity.this, SignUp.class);
+                        Intent intent = new Intent(MainActivity.this, Menu.class);
                         intent.putExtra("Token", response.toString());
                         startActivity(intent);
                         finish();
