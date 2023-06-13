@@ -65,7 +65,10 @@ public class MainActivity extends AppCompatActivity {
                     // El correo electrónico ingresado no es válido
                     Toast.makeText(getApplicationContext(), R.string.Invalid_email, Toast.LENGTH_SHORT).show();
                 }else{
-                    makeRequest();
+                    Intent intent = new Intent(MainActivity.this, Menu.class);
+                    startActivity(intent);
+                    finish();
+//                    makeRequest();
                 }
             }
         });
@@ -89,7 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        Intent intent = new Intent(MainActivity.this, SignUp.class);
+                        intent.putExtra("Token", response.toString());
+                        startActivity(intent);
+                        finish();
                     }
                 },
                 new Response.ErrorListener() {
