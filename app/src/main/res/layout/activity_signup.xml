@@ -131,4 +131,16 @@
         app:layout_constraintTop_toBottomOf="@+id/SU_SignInLink"
         app:layout_constraintVertical_bias="0.0" />
 
+    <ImageView
+        android:id="@+id/avatarImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/default_avatar"
+        android:background="@drawable/circle_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:contentDescription="Avatar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Intent intent = new Intent(MainActivity.this, Menu.class);
+                        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                         intent.putExtra("Token", response.toString());
                         startActivity(intent);
                         finish();

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 public class SignUpActivity extends AppCompatActivity {
     private TextView signInLink;
@@ -24,5 +25,8 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ImageView avatarImageView = findViewById(R.id.avatarImageView);
+        avatarImageView.setImageResource(R.drawable.default_avatar);
     }
 }
