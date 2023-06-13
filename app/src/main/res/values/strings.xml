@@ -1,5 +1,5 @@
 <resources>
-
+    <!-- Sign in -->
     <string name="app_name">WishList</string>
 
     <string name="Sign_In_Title">Sign in</string>
@@ -11,4 +11,11 @@
     <string name="ChangeBox_SI">Sign in</string>
     <string name="Sign_In_Button">Sign in</string>
     <string name="ForgetPassword">Forget Password</string>
+
+
+    <!-- Error -->
+    <string name="Missing_Fields">Faltan campos requeridos</string>
+    <string name="Invalid_email">Email invalido</string>
+    <string name="wrongAcces">Email o contraseña incorrecto</string>
+    <string name="DefaultError">Error, Contacte con soporte</string>
 </resources>
