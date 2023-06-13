@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">Millonari</string>
-    <string name="pregunta">Quina és la capital de França?</string>
-    <string name="resposta1">Lyon</string>
-    <string name="resposta2">París</string>
+    <string name="Sign_In_Title">Sign in</string>
+    <string name="UserName_SI">Enter your user or email address</string>
+    <string name="UserName_hint_SI">User or email address</string>
+    <string name="Password_SI">Enter your Password</string>
+    <string name="Password_hint_SI">Password</string>
+    <string name="No_Account">No Account?</string>
+    <string name="ChangeBox_SI">Sign in</string>
+    <string name="Sign_In_Button">Sign in</string>
+    <string name="ForgetPassword">Forget Password</string>
 </resources>

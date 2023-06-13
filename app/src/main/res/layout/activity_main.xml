@@ -7,33 +7,94 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/SignUpTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="140dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/Sign_In_Title"
+        android:textColor="#000000"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="135dp" />
+
+    <TextView
+        android:id="@+id/SU_TitleNameBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="4dp"
+        android:text="@string/UserName_SI"
+        app:layout_constraintBottom_toTopOf="@+id/SU_NameBox"
+        app:layout_constraintStart_toStartOf="@+id/SU_NameBox" />
+
+    <EditText
+        android:id="@+id/SU_NameBox"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:hint="@string/UserName_hint_SI"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@+id/SignUpTitle"
+        tools:layout_editor_absoluteX="69dp" />
+
+    <EditText
+        android:id="@+id/SU_PasswordBox"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:ems="10"
+        android:hint="@string/Password_hint_SI"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@+id/SU_NameBox"
+        tools:layout_editor_absoluteX="69dp" />
+
+    <TextView
+        android:id="@+id/SUTitlePasswordBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Password_SI"
+        app:layout_constraintBottom_toTopOf="@+id/SU_PasswordBox"
+        app:layout_constraintStart_toStartOf="@+id/SU_PasswordBox" />
+
+    <TextView
+        android:id="@+id/SUNoAcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/No_Account"
+        app:layout_constraintStart_toStartOf="@+id/SU_PasswordBox"
+        app:layout_constraintTop_toBottomOf="@+id/SU_PasswordBox" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/ChangeBox_SI"
+        app:layout_constraintTop_toTopOf="@+id/SUNoAcount"
+        tools:layout_editor_absoluteX="69dp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:text="@string/ForgetPassword"
+        app:layout_constraintEnd_toEndOf="@+id/SU_PasswordBox"
+        app:layout_constraintStart_toEndOf="@+id/SUNoAcount"
+        tools:layout_editor_absoluteY="416dp" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="60dp"
-        android:text="@string/app_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="105dp"
         android:text="Button"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/SU_PasswordBox"
+        tools:layout_editor_absoluteX="147dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
