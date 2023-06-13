@@ -11,4 +11,14 @@
     <string name="ChangeBox_SI">Sign in</string>
     <string name="Sign_In_Button">Sign in</string>
     <string name="ForgetPassword">Forget Password</string>
+    <string name="Sign_Up_Title">Sign up</string>
+    <string name="Name_SU">Enter your name</string>
+    <string name="Name_hint_SU">First name</string>
+    <string name="Last_Name_SU">Enter your last name</string>
+    <string name="Last_Name_hint_SU">Last name</string>
+    <string name="EmailOrPhone_hint_SU">Email or phone number</string>
+    <string name="Password_hint_SU">Password</string>
+    <string name="Have_Account">Have an account?</string>
+    <string name="Sign_In_Link_SU">Sign in</string>
+    <string name="Sign_Up_Button">Sign up</string>
 </resources>

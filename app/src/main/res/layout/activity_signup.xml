@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpActivity">
+
+    <TextView
+        android:id="@+id/SignUpTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="140dp"
+        android:fontFamily="sans-serif"
+        android:text="Sign Up"
+        android:textColor="#000000"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/SU_TitleNameBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="4dp"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/SU_NameBox"
+        app:layout_constraintStart_toStartOf="@+id/SU_NameBox" />
+
+    <EditText
+        android:id="@+id/SU_NameBox"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SignUpTitle" />
+
+    <TextView
+        android:id="@+id/SU_TitleLastNameBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Last name"
+        app:layout_constraintTop_toBottomOf="@+id/SU_NameBox"
+        app:layout_constraintStart_toStartOf="@+id/SU_LastNameBox" />
+
+    <EditText
+        android:id="@+id/SU_LastNameBox"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Last name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SU_NameBox" />
+
+    <TextView
+        android:id="@+id/SU_TitleEmailOrPhoneBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Enter your phone number or email address"
+        app:layout_constraintTop_toBottomOf="@+id/SU_LastNameBox"
+        app:layout_constraintStart_toStartOf="@+id/SU_EmailOrPhoneBox" />
+
+    <EditText
+        android:id="@+id/SU_EmailOrPhoneBox"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Phone number or email address"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SU_LastNameBox" />
+
+    <TextView
+        android:id="@+id/SU_TitlePasswordBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Enter your Password"
+        app:layout_constraintTop_toBottomOf="@+id/SU_EmailOrPhoneBox"
+        app:layout_constraintStart_toStartOf="@+id/SU_PasswordBox" />
+
+    <EditText
+        android:id="@+id/SU_PasswordBox"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SU_EmailOrPhoneBox" />
+
+    <TextView
+        android:id="@+id/SU_SignInLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Have an account? Sign in"
+        android:textColor="@color/blue"
+        app:layout_constraintStart_toStartOf="@+id/SU_PasswordBox"
+        app:layout_constraintTop_toBottomOf="@+id/SU_PasswordBox" />
+
+    <Button
+        android:id="@+id/SU_SignUp_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Sign Up"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SU_SignInLink"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
