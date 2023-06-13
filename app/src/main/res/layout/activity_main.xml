@@ -22,17 +22,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/SU_TitleNameBox"
+        android:id="@+id/SI_TitleNameBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="4dp"
         android:text="@string/UserName_SI"
-        app:layout_constraintBottom_toTopOf="@+id/SU_NameBox"
-        app:layout_constraintStart_toStartOf="@+id/SU_NameBox" />
+        app:layout_constraintBottom_toTopOf="@+id/SI_NameBox"
+        app:layout_constraintStart_toStartOf="@+id/SI_NameBox" />
 
     <EditText
-        android:id="@+id/SU_NameBox"
+        android:id="@+id/SI_NameBox"
         android:layout_width="272dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/SignUpTitle" />
 
     <EditText
-        android:id="@+id/SU_PasswordBox"
+        android:id="@+id/SI_PasswordBox"
         android:layout_width="272dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
@@ -53,54 +53,55 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SU_NameBox" />
+        app:layout_constraintTop_toBottomOf="@+id/SI_NameBox" />
 
     <TextView
-        android:id="@+id/SUTitlePasswordBox"
+        android:id="@+id/SITitlePasswordBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Password_SI"
-        app:layout_constraintBottom_toTopOf="@+id/SU_PasswordBox"
-        app:layout_constraintStart_toStartOf="@+id/SU_PasswordBox" />
+        app:layout_constraintBottom_toTopOf="@+id/SI_PasswordBox"
+        app:layout_constraintStart_toStartOf="@+id/SI_PasswordBox" />
 
     <TextView
-        android:id="@+id/SUNoAcount"
+        android:id="@+id/SI_NoAcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/No_Account"
-        app:layout_constraintStart_toStartOf="@+id/SU_PasswordBox"
-        app:layout_constraintTop_toBottomOf="@+id/SU_PasswordBox" />
+        app:layout_constraintStart_toStartOf="@+id/SI_PasswordBox"
+        app:layout_constraintTop_toBottomOf="@+id/SI_PasswordBox" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/SI_SignUpLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:text="@string/ChangeBox_SI"
-        app:layout_constraintStart_toStartOf="@+id/SUNoAcount"
-        app:layout_constraintTop_toTopOf="@+id/SUNoAcount" />
+        android:textColor="@color/blue"
+        app:layout_constraintStart_toStartOf="@+id/SI_NoAcount"
+        app:layout_constraintTop_toTopOf="@+id/SI_NoAcount" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/SI_ForgetPassord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
         android:layout_marginTop="69dp"
         android:text="@string/ForgetPassword"
-        app:layout_constraintEnd_toEndOf="@+id/SU_PasswordBox"
-        app:layout_constraintStart_toEndOf="@+id/SUNoAcount"
-        app:layout_constraintTop_toTopOf="@+id/SU_PasswordBox" />
+        app:layout_constraintEnd_toEndOf="@+id/SI_PasswordBox"
+        app:layout_constraintStart_toEndOf="@+id/SI_NoAcount"
+        app:layout_constraintTop_toTopOf="@+id/SI_PasswordBox" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/SI_SignIn_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="105dp"
-        android:text="Button"
+        android:text="@string/Sign_In_Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SU_PasswordBox" />
+        app:layout_constraintTop_toBottomOf="@+id/SI_PasswordBox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
