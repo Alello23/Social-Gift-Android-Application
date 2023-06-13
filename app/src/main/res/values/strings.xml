@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="app_name">WishList</string>
+
     <string name="Sign_In_Title">Sign in</string>
     <string name="UserName_SI">Enter your user or email address</string>
     <string name="UserName_hint_SI">User or email address</string>
