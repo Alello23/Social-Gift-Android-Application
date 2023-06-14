@@ -72,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 在这里发送 POST 请求
+                // Post
                 postSignUpData();
             }
         });
