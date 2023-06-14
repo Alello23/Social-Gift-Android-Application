@@ -1,6 +1,7 @@
 <resources>
-    <!-- Sign in -->
     <string name="app_name">WishList</string>
+
+    <!-- Sign in -->
 
     <string name="Sign_In_Title">Sign in</string>
     <string name="UserName_SI">Enter your user or email address</string>
@@ -12,14 +13,8 @@
     <string name="Sign_In_Button">Sign in</string>
     <string name="ForgetPassword">Forget Password</string>
 
-    <!-- Error -->
-    <string name="Missing_Fields">Faltan campos requeridos</string>
-    <string name="Invalid_email">Email invalido</string>
-    <string name="wrongAcces">Email o contraseña incorrecto</string>
-    <string name="DefaultError">Error, Contacte con soporte</string>
-
-
     <!-- Sign up -->
+
     <string name="Sign_Up_Title">Sign up</string>
     <string name="Name_SU">Enter your name</string>
     <string name="Name_hint_SU">First name</string>
@@ -33,11 +28,23 @@
 
     <!-- Error -->
     <string name="Error_400">Bad request</string>
+    <string name="Error_401">Wrong username and password combination</string>
     <string name="Error_406">Missing parameters</string>
     <string name="Error_409">Email address already registered</string>
     <string name="Error_500">User not created</string>
     <string name="Error_502">Internal Server Error</string>
-    <string name="Error_Network">Unknown error occurred</string>
+
+    <string name="Error_Email">Please, enter a valid email</string>
+    <string name="Error_Network">Check your connection</string>
     <string name="Error_Default">Unknown error occurred</string>
+
+    <!-- Account -->
+
+    <string name="name">Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="edit_account">Edit Account</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="logout">Log out</string>
 
 </resources>

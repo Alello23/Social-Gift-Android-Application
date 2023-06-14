@@ -1,4 +1,4 @@
-package com.example.practica2.Menu;
+package com.example.practica2.Menu.Account;
 
 import androidx.fragment.app.Fragment;
 

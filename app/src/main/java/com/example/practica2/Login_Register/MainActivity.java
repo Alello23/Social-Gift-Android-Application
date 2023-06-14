@@ -41,10 +41,7 @@ public class MainActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(MainActivity.this);
 
         SignIn = findViewById(R.id.SI_SignIn_Button);
-
-
         ChangeBox = findViewById(R.id.SI_SignUpLabel);
-
         UserName = findViewById(R.id.SI_NameBox);
         Password = findViewById(R.id.SI_PasswordBox);
 
@@ -65,14 +62,12 @@ public class MainActivity extends AppCompatActivity {
                 String email = UserName.getText().toString().trim();
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     // El correo electrónico ingresado no es válido
-                    Toast.makeText(getApplicationContext(), R.string.Invalid_email, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.Error_Email, Toast.LENGTH_SHORT).show();
                 }else{
                     makeRequest();
                 }
             }
         });
-
-
     }
 
     private void makeRequest() {
@@ -100,32 +95,21 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Manejar el error de la solicitud
-                        String errorMessage = "Error en la solicitud";
-                        if (error.networkResponse != null && error.networkResponse.data != null) {
-                            try {
-                                // Analizar la respuesta de error del servidor
-                                String errorResponse = new String(error.networkResponse.data, "UTF-8");
-                                JSONObject errorJson = new JSONObject(errorResponse);
-                                String errorCode = errorJson.getJSONObject("error").optString("code");
-                                errorMessage = errorJson.getJSONObject("error").optString("message");
-                                // Realizar acciones basadas en el código de error y mensaje de error
-                                if (errorCode.equals("NOT_AUTHORIZED")) {
-                                    Toast.makeText(getApplicationContext(), R.string.wrongAcces, Toast.LENGTH_SHORT).show();
-                                }
-                                else if (errorCode.equals("MISSING_FIELDS")) {
-                                    Toast.makeText(getApplicationContext(), R.string.Missing_Fields, Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(getApplicationContext(), R.string.DefaultError, Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (UnsupportedEncodingException | JSONException e) {
-                                e.printStackTrace();
+                        if (error.networkResponse != null) {
+                            if(error.networkResponse.statusCode == 400) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_400, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 401) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_401, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 406) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_406, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
                         }
-                        Log.e("TAG", errorMessage);
                     }
                 });
-
         requestQueue.add(request);
     }
 }

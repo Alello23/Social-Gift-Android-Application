@@ -1,4 +1,4 @@
-package com.example.practica2.Menu;
+package com.example.practica2.Menu.WishList;
 
 import androidx.fragment.app.Fragment;
 
