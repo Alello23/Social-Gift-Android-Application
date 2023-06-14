@@ -47,4 +47,22 @@
     <string name="delete_account">Delete Account</string>
     <string name="logout">Log out</string>
 
+    <!-- WishLists -->
+
+    <string name="Title_wishlist">Wishlist</string>
+
+    <!-- New WishList -->
+
+    <string name="Title_new_wishlist">New Wishlist</string>
+    <string name="Title_of_wishlist">Title</string>
+    <string name="Description_of_wishlist">Description</string>
+    <string name="end_day_wishlist">Day End</string>
+    <string name="end_time_wishlist">Time End</string>
+    <string name="hint_title">Christmas</string>
+    <string name="hint_description">Chirstmas is coming...</string>
+
+
+
+
+
 </resources>
