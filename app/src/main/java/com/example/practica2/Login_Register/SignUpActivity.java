@@ -48,18 +48,18 @@ public class SignUpActivity extends AppCompatActivity {
         EmailOrPhoneBox = findViewById(R.id.SU_EmailOrPhoneBox);
         PasswordBox = findViewById(R.id.SU_PasswordBox);
         AvatarBox = findViewById(R.id.avatarImageView);
-        signInLink = findViewById(R.id.SU_SignInLink);
-        SignUp = findViewById(R.id.SU_SignUp_Button);
-
         AvatarBox.setImageResource(R.drawable.default_avatar);
 
+        SignUp = findViewById(R.id.SU_SignUp_Button);
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 在这里发送 POST 请求
                 postSignUpData();
             }
         });
 
+        signInLink = findViewById(R.id.SU_SignInLink);
         signInLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +71,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void postSignUpData() {
 
+
+
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("name", NameBox.getText().toString());
@@ -81,6 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonParams,

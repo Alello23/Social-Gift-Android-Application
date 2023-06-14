@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/group"
+        android:icon="@drawable/group_image"
         android:title="Home" />
     <item
         android:id="@+id/navigation_chat"
@@ -10,7 +10,7 @@
         android:title="Chat" />
     <item
         android:id="@+id/navigation_wishlist"
-        android:icon="@drawable/wishlist"
+        android:icon="@drawable/wishlist_image"
         android:title="WishList" />
     <item
         android:id="@+id/navigation_account"

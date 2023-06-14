@@ -4,7 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#990000</color>
     <color name="blue">#990000</color>
-
+    <color name="grey">#E5E5E5</color>
+    <color name="grey_dark">#777777</color>
 
     <color name="colorPrimary">#FFFFFFFF</color>
     <color name="unselectedIconColor">#FF000000</color>
