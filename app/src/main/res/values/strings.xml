@@ -8,7 +8,7 @@
     <string name="Password_SI">Enter your Password</string>
     <string name="Password_hint_SI">Password</string>
     <string name="No_Account">No Account?</string>
-    <string name="ChangeBox_SI">Sign in</string>
+    <string name="ChangeBox_SI">Sign up</string>
     <string name="Sign_In_Button">Sign in</string>
     <string name="ForgetPassword">Forget Password</string>
 
@@ -18,6 +18,8 @@
     <string name="wrongAcces">Email o contraseña incorrecto</string>
     <string name="DefaultError">Error, Contacte con soporte</string>
 
+
+    <!-- Sign up -->
     <string name="Sign_Up_Title">Sign up</string>
     <string name="Name_SU">Enter your name</string>
     <string name="Name_hint_SU">First name</string>
@@ -28,4 +30,14 @@
     <string name="Have_Account">Have an account?</string>
     <string name="Sign_In_Link_SU">Sign in</string>
     <string name="Sign_Up_Button">Sign up</string>
+
+    <!-- Error -->
+    <string name="Error_400">Bad request</string>
+    <string name="Error_406">Missing parameters</string>
+    <string name="Error_409">Email address already registered</string>
+    <string name="Error_500">User not created</string>
+    <string name="Error_502">Internal Server Error</string>
+    <string name="Error_Network">Unknown error occurred</string>
+    <string name="Error_Default">Unknown error occurred</string>
+
 </resources>

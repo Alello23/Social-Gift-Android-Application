@@ -1,9 +1,10 @@
-package com.example.practica2;
+package com.example.practica2.Login_Register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,9 +18,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.practica2.Login_Register.MainActivity;
+import com.example.practica2.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class SignUpActivity extends AppCompatActivity {
     private TextView signInLink;
@@ -65,11 +70,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void postSignUpData() {
+
+
+
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("name", NameBox.getText().toString());
             jsonParams.put("last_name", LastNameBox.getText().toString());
-            jsonParams.put("email_or_phone", EmailOrPhoneBox.getText().toString());
+            jsonParams.put("email", EmailOrPhoneBox.getText().toString());
             jsonParams.put("password", PasswordBox.getText().toString());
             jsonParams.put("image", "https://balandrau.salle.url.edu/i3/repositoryimages/photo/47601a8b-dc7f-41a2-a53b-19d2e8f54cd0.png");
         } catch (JSONException e) {
@@ -77,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
 
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/signup";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonParams,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -91,7 +99,23 @@ public class SignUpActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Sign up failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        if (error.networkResponse != null) {
+                            if(error.networkResponse.statusCode == 400) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_400, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 406) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_406, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 409) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_409, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 500) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_500, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 502) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_502, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
         );

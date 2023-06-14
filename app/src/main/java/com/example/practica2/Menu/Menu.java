@@ -1,12 +1,13 @@
-package com.example.practica2;
+package com.example.practica2.Menu;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.practica2.Menu.Home.HomeFragment;
+import com.example.practica2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Menu extends AppCompatActivity {
@@ -16,6 +17,14 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.fragmentContainerView);
+
+        if (fragment == null){
+            fragment = new HomeFragment();
+            fm.beginTransaction().add(R.id.fragmentContainerView,fragment).commit();
+        }
 
 //        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 //            switch (item.getItemId()) {
