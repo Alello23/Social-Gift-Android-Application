@@ -2,6 +2,7 @@ package com.example.practica2.Login_Register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,8 @@ import com.example.practica2.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends AppCompatActivity {
     private Button SignIn;
