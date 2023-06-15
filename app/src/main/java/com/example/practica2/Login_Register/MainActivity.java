@@ -87,7 +87,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Intent intent = new Intent(MainActivity.this, Menu.class);
-                        intent.putExtra("User", response.toString());
+                        try {
+                            intent.putExtra("User", response.getString("accessToken"));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                         startActivity(intent);
                         finish();
                     }

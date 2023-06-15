@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.example.practica2.Login_Register.MainActivity;
 import com.example.practica2.Menu.Account.AccountFragment;
 import com.example.practica2.Menu.Chat.ChatFragment;
 import com.example.practica2.Menu.Home.HomeFragment;
@@ -15,13 +18,17 @@ import com.example.practica2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Menu extends AppCompatActivity {
+    private String token;
+    RequestQueue requestQueue;
     private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        this.token = getIntent().getStringExtra("User");
 
+        requestQueue = Volley.newRequestQueue(Menu.this);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         FragmentManager fm = getSupportFragmentManager();
@@ -46,7 +53,7 @@ public class Menu extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.navigation_account){
-                openFragment(new AccountFragment());
+                openFragment(new AccountFragment(token, requestQueue));
                 return true;
             }
             return false;

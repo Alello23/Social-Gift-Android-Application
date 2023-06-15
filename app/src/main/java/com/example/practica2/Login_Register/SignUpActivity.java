@@ -42,7 +42,6 @@ public class SignUpActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Picasso picasso;
-    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,11 +89,11 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
             String selectedImagePath = selectedImageUri.getPath();
-            picasso.load(selectedImagePath).into(AvatarBox);
+            Picasso.get().load(selectedImagePath).into(AvatarBox);
         }
     }
 
@@ -115,15 +114,10 @@ public class SignUpActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            token = response.getString("accessToken");
-                            Toast.makeText(getApplicationContext(), "Sign up successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        Toast.makeText(getApplicationContext(), "Sign up successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 },
                 new Response.ErrorListener() {
@@ -149,12 +143,6 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }
         ) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
-                return headers;
-            }
         };
         requestQueue.add(request);
     }
