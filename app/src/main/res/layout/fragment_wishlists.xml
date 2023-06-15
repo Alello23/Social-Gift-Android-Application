@@ -34,7 +34,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginEnd="28dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="58dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/add_list" />

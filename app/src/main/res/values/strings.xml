@@ -58,10 +58,27 @@
     <string name="Description_of_wishlist">Description</string>
     <string name="end_day_wishlist">Day End</string>
     <string name="end_time_wishlist">Time End</string>
+    <string name="Select_date">SELECT DATE</string>
+    <string name="Select_time">SELECT TIME</string>
     <string name="hint_title">Christmas</string>
     <string name="hint_description">Chirstmas is coming...</string>
+    <string name="Create_Button">Create</string>
 
+    <!-- New Product -->
 
+    <string name="Title_new_Product">New Product</string>
+    <string name="Title_of_Product">Title</string>
+    <string name="Description_of_Product">Description</string>
+    <string name="price_Product">Price</string>
+    <string name="category_Product">Category</string>
+    <string name="Select_price">SELECT PRICE</string>
+    <string name="Select_cagegory">SELECT CATEGORY</string>
+    <string name="hint_title_product">apple</string>
+    <string name="hint_description_product">Juicy apple...</string>
+    <string name="Create_Button_product">Create</string>
+
+    <!-- Chat -->
+    <string name="hint_chat">Type Message</string>
 
 
 

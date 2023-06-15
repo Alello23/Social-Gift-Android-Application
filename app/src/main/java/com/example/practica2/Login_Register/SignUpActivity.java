@@ -2,9 +2,14 @@ package com.example.practica2.Login_Register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +31,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -41,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button SignUp;
     private RequestQueue requestQueue;
     private static final int PICK_IMAGE_REQUEST = 1;
-    private Picasso picasso;
+    private String selectedImagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,20 +99,61 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedImageUri = data.getData();
-            String selectedImagePath = selectedImageUri.getPath();
+            selectedImagePath = getPathFromUri(selectedImageUri);
+
+            // Cargar la imagen en el ImageView utilizando Picasso
             Picasso.get().load(selectedImagePath).into(AvatarBox);
         }
     }
 
+    private String getPathFromUri(Uri uri) {
+        String path = null;
+
+        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                path = cursor.getString(columnIndex);
+                cursor.close();
+            }
+        } else if (ContentResolver.SCHEME_FILE.equals(uri.getScheme())) {
+            path = uri.getPath();
+        }
+
+        return path;
+    }
+
+
+
     private void postSignUpData() {
         JSONObject jsonParams = new JSONObject();
         try {
+            String encodedImage;
+            if (selectedImagePath != null) {
+                File imageFile = new File(selectedImagePath);
+
+                // Read the image file and convert it to a byte array
+                FileInputStream fis = new FileInputStream(imageFile);
+                byte[] imageBytes = new byte[(int) imageFile.length()];
+                fis.read(imageBytes);
+                fis.close();
+
+                // Convert the byte array to a Base64 encoded string
+                encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+            }else {
+                encodedImage = "https://balandrau.salle.url.edu/i3/repositoryimages/photo/47601a8b-dc7f-41a2-a53b-19d2e8f54cd0.png";
+            }
+
             jsonParams.put("name", NameBox.getText().toString());
             jsonParams.put("last_name", LastNameBox.getText().toString());
             jsonParams.put("email", EmailOrPhoneBox.getText().toString());
             jsonParams.put("password", PasswordBox.getText().toString());
-            jsonParams.put("image", "https://balandrau.salle.url.edu/i3/repositoryimages/photo/47601a8b-dc7f-41a2-a53b-19d2e8f54cd0.png");
+            jsonParams.put("image", encodedImage);
+
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -143,7 +191,14 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }
         ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
         };
         requestQueue.add(request);
     }
+
 }

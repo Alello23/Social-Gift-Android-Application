@@ -1,4 +1,4 @@
-package com.example.practica2.Menu.Chat;
+package com.example.practica2.Menu.WishList;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -19,11 +19,11 @@ import com.example.practica2.R;
 
 import java.util.Calendar;
 
-public class ChatFragment extends Fragment {
+public class NewWishlistFragment extends Fragment {
     private Button openDatePickerButton;
     private Button openTimePickerButton;
 
-    public ChatFragment() {
+    public NewWishlistFragment() {
         // Constructor público requerido vacío
     }
 

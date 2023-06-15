@@ -2,11 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="white_gray">#F2F2F2</color>
+    <color name="white_gray">#ECECEC</color>
     <color name="red">#990000</color>
     <color name="blue">#990000</color>
     <color name="grey">#E5E5E5</color>
     <color name="grey_dark">#777777</color>
+    <color name="yellow">#FFCB45</color>
+    <color name="yellow_messege">#FFC700</color>
 
 
     <color name="colorPrimary">#FFFFFFFF</color>

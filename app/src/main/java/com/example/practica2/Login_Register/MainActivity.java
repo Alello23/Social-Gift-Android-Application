@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     private void makeRequest() {
         // Crea un objeto JSON con los parámetros de inicio de sesión
         JSONObject jsonParams = new JSONObject();

@@ -13,6 +13,7 @@ import com.example.practica2.Login_Register.MainActivity;
 import com.example.practica2.Menu.Account.AccountFragment;
 import com.example.practica2.Menu.Chat.ChatFragment;
 import com.example.practica2.Menu.Home.HomeFragment;
+import com.example.practica2.Menu.Home.NewProductFragment;
 import com.example.practica2.Menu.WishList.WishListFragment;
 import com.example.practica2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,7 +46,8 @@ public class Menu extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.navigation_chat){
-                openFragment(new ChatFragment());
+//                openFragment(new ChatFragment());
+                openFragment(new NewProductFragment());
                 return true;
             }
             if (item.getItemId() == R.id.navigation_wishlist){
