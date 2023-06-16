@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("email", UserName.getText().toString());
+            jsonParams.put("password", Password.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

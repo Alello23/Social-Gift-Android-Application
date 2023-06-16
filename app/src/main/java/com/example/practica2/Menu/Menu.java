@@ -29,14 +29,14 @@ public class Menu extends AppCompatActivity {
         this.token = getIntent().getStringExtra("User");
 
         requestQueue = Volley.newRequestQueue(Menu.this);
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.ME_bottomNavigationView);
 
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragmentContainerView);
+        Fragment fragment = fm.findFragmentById(R.id.ME_fragmentContainerView);
 
         if (fragment == null){
             fragment = new HomeFragment();
-            fm.beginTransaction().add(R.id.fragmentContainerView,fragment).commit();
+            fm.beginTransaction().add(R.id.ME_fragmentContainerView,fragment).commit();
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -65,7 +65,7 @@ public class Menu extends AppCompatActivity {
     private void openFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
+        fragmentTransaction.replace(R.id.ME_fragmentContainerView, fragment);
         fragmentTransaction.commit();
     }
 }

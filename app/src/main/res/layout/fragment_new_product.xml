@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <View
-        android:id="@+id/AC_background"
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/red"

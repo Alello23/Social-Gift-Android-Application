@@ -27,6 +27,8 @@ import com.example.practica2.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +36,7 @@ import java.util.Map;
 public class AccountFragment extends Fragment {
     private String token;
     private TextView deleteAccount;
+    private TextView logOut;
     private RequestQueue requestQueue;
     private TextView editButton;
     private EditText nameEditText, lastNameEditText, emailEditText;
@@ -42,7 +45,6 @@ public class AccountFragment extends Fragment {
     public AccountFragment(String token, RequestQueue requestQueue) {
         this.token = token;
         this.requestQueue = requestQueue;
-        // Constructor público requerido vacío
     }
 
     @Override
@@ -50,11 +52,13 @@ public class AccountFragment extends Fragment {
         // Infla el diseño del fragmento en el contenedor
         View view = inflater.inflate(R.layout.fragment_account, container, false);
 
-        deleteAccount = view.findViewById(R.id.P_deleteAccount);
-        editButton = view.findViewById(R.id.P_editAccount);
-        nameEditText = view.findViewById(R.id.nameTextView);
-        lastNameEditText = view.findViewById(R.id.lastNameTextView);
-        emailEditText = view.findViewById(R.id.emailTextView);
+        deleteAccount = view.findViewById(R.id.AC_delete_account_button);
+        editButton = view.findViewById(R.id.AC_edit_account_button);
+        nameEditText = view.findViewById(R.id.AC_edit_name);
+        lastNameEditText = view.findViewById(R.id.AC_edit_last_name);
+        emailEditText = view.findViewById(R.id.AC_edit_email);
+        logOut = view.findViewById(R.id.AC_log_out_button);
+
         deleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,20 +66,6 @@ public class AccountFragment extends Fragment {
                 deleteUser();
             }
         });
-
-        // Decode JWT to get user id
-        String[] splitToken = token.split("\\.");
-        byte[] decodedBytes = Base64.decode(splitToken[1], Base64.URL_SAFE);
-        String jsonBody = new String(decodedBytes, StandardCharsets.UTF_8);
-
-        try {
-            JSONObject jsonObject = new JSONObject(jsonBody);
-            userID = jsonObject.getString("id");
-            getUserDetails(userID);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,12 +83,37 @@ public class AccountFragment extends Fragment {
                 }
             }
         });
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+        decodeJWT();
 
         return view;
     }
 
-    private void getUserDetails(String userId) {
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + userId;
+    private void decodeJWT (){
+        // Decode JWT to get user id
+        String[] splitToken = token.split("\\.");
+        byte[] decodedBytes = Base64.decode(splitToken[1], Base64.URL_SAFE);
+        String jsonBody = new String(decodedBytes, StandardCharsets.UTF_8);
+
+        try {
+            JSONObject jsonObject = new JSONObject(jsonBody);
+            userID = jsonObject.getString("id");
+            getUserDetails();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getUserDetails() {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + userID;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -150,20 +165,30 @@ public class AccountFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(getContext(), "yay!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.update_succesful, Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        String errorResponse = null;
-                        try {
-                            errorResponse = new String(error.networkResponse.data, "UTF-8");
-                        } catch (UnsupportedEncodingException e) {
-                            throw new RuntimeException(e);
+                        getUserDetails();
+                        if (error.networkResponse != null) {
+                            if(error.networkResponse.statusCode == 400) {
+                                Toast.makeText(getContext(), R.string.Error_400, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 401) {
+                                Toast.makeText(getContext(), R.string.Error_401, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 406) {
+                                Toast.makeText(getContext(), R.string.Error_406, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 409) {
+                                Toast.makeText(getContext(), R.string.Error_409, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 410) {
+                                Toast.makeText(getContext(), R.string.Error_410, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getContext(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
                         }
-                        Log.e("error", errorResponse);
-                        // Handle error here
                     }
                 }
         ) {

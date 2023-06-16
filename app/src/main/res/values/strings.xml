@@ -26,18 +26,6 @@
     <string name="Sign_In_Link_SU">Sign in</string>
     <string name="Sign_Up_Button">Sign up</string>
 
-    <!-- Error -->
-    <string name="Error_400">Bad request</string>
-    <string name="Error_401">Wrong username and password combination</string>
-    <string name="Error_406">Missing parameters</string>
-    <string name="Error_409">Email address already registered</string>
-    <string name="Error_500">User not created</string>
-    <string name="Error_502">Internal Server Error</string>
-
-    <string name="Error_Email">Please, enter a valid email</string>
-    <string name="Error_Network">Check your connection</string>
-    <string name="Error_Default">Unknown error occurred</string>
-
     <!-- Account -->
 
     <string name="name">Name</string>
@@ -47,6 +35,8 @@
     <string name="save_account">Save</string>
     <string name="delete_account">Delete Account</string>
     <string name="logout">Log out</string>
+
+    <string name="update_succesful">Update success</string>
 
     <!-- WishLists -->
 
@@ -81,15 +71,22 @@
     <!-- Chat -->
     <string name="hint_chat">Type Message</string>
 
-    <!-- Friends chat -->
-    <string name="">Type Message</string>
-
-
     <!-- Product info -->
     <string name="product_description">Description</string>
     <string name="product_add_to_wishlist">Add to WishList</string>
 
 
+    <!-- Error -->
+    <string name="Error_400">Bad request</string>
+    <string name="Error_401">Wrong username and password combination</string>
+    <string name="Error_406">Missing parameters</string>
+    <string name="Error_409">Email address already registered</string>
+    <string name="Error_410">No user has been edited</string>
+    <string name="Error_500">User not created</string>
+    <string name="Error_502">Internal Server Error</string>
 
+    <string name="Error_Email">Please, enter a valid email</string>
+    <string name="Error_Network">Check your connection</string>
+    <string name="Error_Default">Unknown error occurred</string>
 
 </resources>

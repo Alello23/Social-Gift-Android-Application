@@ -10,25 +10,25 @@
             android:layout_height="match_parent"
             android:background="@color/red" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="640dp" />
+     <androidx.constraintlayout.widget.Guideline
+         android:id="@+id/AC_guideline"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         app:layout_constraintGuide_begin="91dp" />
 
         <View
-            android:id="@+id/view4"
+            android:id="@+id/AC_background_2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/rounded_top_corners"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            app:layout_constraintTop_toTopOf="@+id/AC_guideline" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/AC_log_out_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="272dp"
@@ -42,17 +42,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/AC_log_out_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="28dp"
-            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/AC_log_out_button"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/exit_image" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/AC_name_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
@@ -62,46 +62,45 @@
             android:textStyle="bold"
             android:typeface="normal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/avatarImage_FC" />
+            app:layout_constraintTop_toBottomOf="@+id/AC_avatar_button" />
 
         <View
-            android:id="@+id/view2"
+            android:id="@+id/AC_separator"
             android:layout_width="334dp"
             android:layout_height="2dp"
             android:layout_marginTop="18dp"
             android:background="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/AC_name_title" />
 
         <TextView
-            android:id="@+id/AC_sub_name_text"
+            android:id="@+id/AC_last_name_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
             android:layout_marginTop="18dp"
-            android:editable="false"
             android:gravity="end"
             android:text="@string/last_name"
             android:textSize="20sp"
             android:textStyle="bold"
             android:typeface="normal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view2" />
+            app:layout_constraintTop_toTopOf="@+id/AC_separator" />
 
         <View
-            android:id="@+id/view3"
+            android:id="@+id/AC_separator_2"
             android:layout_width="334dp"
             android:layout_height="2dp"
             android:layout_marginTop="18dp"
             android:background="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/AC_sub_name_text" />
+            app:layout_constraintTop_toBottomOf="@+id/AC_last_name_title" />
 
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/AC_email_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
@@ -111,51 +110,51 @@
             android:textStyle="bold"
             android:typeface="normal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
+            app:layout_constraintTop_toBottomOf="@+id/AC_separator_2" />
 
         <View
-            android:id="@+id/view5"
+            android:id="@+id/AC_separator_3"
             android:layout_width="334dp"
             android:layout_height="2dp"
             android:layout_marginTop="18dp"
             android:background="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/AC_email_title" />
 
 
         <TextView
-            android:id="@+id/P_editAccount"
+            android:id="@+id/AC_edit_account_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:layout_marginEnd="11dp"
             android:text="@string/edit_account"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view5" />
+            app:layout_constraintTop_toTopOf="@+id/AC_separator_3" />
 
         <TextView
-            android:id="@+id/P_deleteAccount"
+            android:id="@+id/AC_delete_account_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
             android:layout_marginEnd="11dp"
             android:text="@string/delete_account"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/P_editAccount" />
+            app:layout_constraintTop_toBottomOf="@+id/AC_edit_account_button" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/AC_edit_account_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="9dp"
-            app:layout_constraintBottom_toBottomOf="@+id/P_editAccount"
-            app:layout_constraintEnd_toStartOf="@+id/P_editAccount"
-            app:layout_constraintTop_toTopOf="@+id/P_editAccount"
+            app:layout_constraintBottom_toBottomOf="@+id/AC_edit_account_button"
+            app:layout_constraintEnd_toStartOf="@+id/AC_edit_account_button"
+            app:layout_constraintTop_toTopOf="@+id/AC_edit_account_button"
             app:srcCompat="@drawable/edit_account_image" />
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/AC_edit_name"
             style="@android:style/Widget.Material.Light.AutoCompleteTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -166,13 +165,13 @@
             android:textColor="@color/grey_dark"
             android:textSize="12sp"
             android:enabled="false"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintBottom_toBottomOf="@+id/AC_name_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView2" />
+            app:layout_constraintTop_toTopOf="@+id/AC_name_title" />
 
 
         <EditText
-            android:id="@+id/editTextText2"
+            android:id="@+id/AC_edit_last_name"
             style="@android:style/Widget.Material.Light.AutoCompleteTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -184,13 +183,14 @@
             android:textSize="12sp"
             android:typeface="serif"
             android:enabled="false"
-            app:layout_constraintBottom_toBottomOf="@+id/AC_sub_name_text"
+            app:layout_constraintBottom_toBottomOf="@+id/AC_last_name_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/AC_sub_name_text" />
+            app:layout_constraintTop_toTopOf="@+id/AC_last_name_title" />
 
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/AC_edit_email"
+            android:gravity="end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="11dp"
@@ -199,34 +199,34 @@
             android:textSize="12sp"
             android:textColor="@color/grey_dark"
             android:enabled="false"
-            app:layout_constraintBottom_toBottomOf="@+id/textView6"
+            app:layout_constraintBottom_toBottomOf="@+id/AC_email_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView6" />
+            app:layout_constraintTop_toTopOf="@+id/AC_email_title" />
 
 
-     <ImageView
-         android:id="@+id/avatarImage_FC"
-         android:layout_width="100dp"
-         android:layout_height="100dp"
-         android:layout_marginTop="40dp"
-         android:background="@drawable/circle_background"
-         android:contentDescription="Avatar"
-         android:src="@drawable/default_avatar"
-         android:clickable="true"
-         android:onClick="selectImage"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.118"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="@+id/guideline" />
+          <ImageView
+              android:id="@+id/AC_avatar_button"
+              android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:layout_marginTop="40dp"
+              android:background="@drawable/circle_background"
+              android:contentDescription="Avatar"
+              android:src="@drawable/default_avatar"
+              android:clickable="true"
+              android:onClick="selectImage"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintHorizontal_bias="0.118"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="@+id/AC_guideline" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/AC_delete_account_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="9dp"
-            app:layout_constraintBottom_toBottomOf="@+id/P_deleteAccount"
-            app:layout_constraintEnd_toStartOf="@+id/P_deleteAccount"
-            app:layout_constraintTop_toTopOf="@+id/P_deleteAccount"
+            app:layout_constraintBottom_toBottomOf="@+id/AC_delete_account_button"
+            app:layout_constraintEnd_toStartOf="@+id/AC_delete_account_button"
+            app:layout_constraintTop_toTopOf="@+id/AC_delete_account_button"
             app:srcCompat="@drawable/trash" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
