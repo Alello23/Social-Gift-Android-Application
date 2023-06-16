@@ -85,6 +85,11 @@
     <string name="">Type Message</string>
 
 
+    <!-- Product info -->
+    <string name="product_description">Description</string>
+    <string name="product_add_to_wishlist">Add to WishList</string>
+
+
 
 
 </resources>

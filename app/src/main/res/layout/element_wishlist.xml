@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/AC_background"
         android:layout_width="match_parent"
         android:layout_height="177dp"
         android:background="@drawable/rounded_corners" />
@@ -19,9 +19,9 @@
         android:background="@drawable/rounded_image"
         android:contentDescription="Avatar"
         android:src="@drawable/test_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        app:layout_constraintBottom_toBottomOf="@+id/AC_background"
+        app:layout_constraintStart_toStartOf="@+id/AC_background"
+        app:layout_constraintTop_toTopOf="@+id/AC_background" />
 
     <ImageView
         android:id="@+id/imageView6"
