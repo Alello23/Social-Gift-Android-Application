@@ -87,13 +87,13 @@
         app:layout_constraintTop_toTopOf="@+id/avatarImage"
         app:srcCompat="@drawable/wishlist_friend" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintTop_toTopOf="@+id/view4"
-        tools:layout_editor_absoluteX="129dp" />
-
+        tools:layout_editor_absoluteX="11dp" />
 
     <EditText
         android:id="@+id/messageEditText"

@@ -9,8 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.practica2.Login_Register.MainActivity;
-import com.example.practica2.Menu.Account.AccountFragment;
+import com.example.practica2.Menu.Account.*;
 import com.example.practica2.Menu.Chat.ChatFragment;
 import com.example.practica2.Menu.Home.HomeFragment;
 import com.example.practica2.Menu.Home.NewProductFragment;
