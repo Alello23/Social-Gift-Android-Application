@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+
                         Intent intent = new Intent(MainActivity.this, Menu.class);
                         try {
                             intent.putExtra("User", response.getString("accessToken"));
@@ -117,6 +118,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         requestQueue.add(request);
+    }
+    @Override
+    public void onBackPressed() {
+    // No hace nada
     }
 
 }

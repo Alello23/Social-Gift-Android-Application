@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         LastNameBox = findViewById(R.id.SU_LastNameBox);
         EmailOrPhoneBox = findViewById(R.id.SU_EmailOrPhoneBox);
         PasswordBox = findViewById(R.id.SU_PasswordBox);
-        AvatarBox = findViewById(R.id.avatarImageView);
+        AvatarBox = findViewById(R.id.SU_AvatarImageView);
         AvatarBox.setImageResource(R.drawable.default_avatar);
 
         AvatarBox.setOnClickListener(new View.OnClickListener() {
@@ -145,5 +145,9 @@ public class SignUpActivity extends AppCompatActivity {
         ) {
         };
         requestQueue.add(request);
+    }
+    @Override
+    public void onBackPressed() {
+    //No hace nada
     }
 }

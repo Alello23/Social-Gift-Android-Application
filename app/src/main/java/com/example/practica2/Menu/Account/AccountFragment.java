@@ -1,6 +1,9 @@
 package com.example.practica2.Menu.Account;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -34,7 +37,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AccountFragment extends Fragment {
-    private String token;
     private TextView deleteAccount;
     private TextView logOut;
     private RequestQueue requestQueue;
@@ -42,8 +44,7 @@ public class AccountFragment extends Fragment {
     private EditText nameEditText, lastNameEditText, emailEditText;
     private String userID;
 
-    public AccountFragment(String token, RequestQueue requestQueue) {
-        this.token = token;
+    public AccountFragment(RequestQueue requestQueue) {
         this.requestQueue = requestQueue;
     }
 
@@ -99,7 +100,7 @@ public class AccountFragment extends Fragment {
 
     private void decodeJWT (){
         // Decode JWT to get user id
-        String[] splitToken = token.split("\\.");
+        String[] splitToken = getFromSharedPrefs().split("\\.");
         byte[] decodedBytes = Base64.decode(splitToken[1], Base64.URL_SAFE);
         String jsonBody = new String(decodedBytes, StandardCharsets.UTF_8);
 
@@ -140,7 +141,7 @@ public class AccountFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
                 return headers;
             }
         };
@@ -196,7 +197,7 @@ public class AccountFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
                 return headers;
             }
         };
@@ -245,10 +246,17 @@ public class AccountFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
                 return headers;
             }
         };
         requestQueue.add(request);
     }
+    public String getFromSharedPrefs() {
+        SharedPreferences sharedPrefs =
+                getActivity().getPreferences(MODE_PRIVATE);
+        String valor = sharedPrefs.getString("token", "default");
+        return valor;
+    }
+
 }

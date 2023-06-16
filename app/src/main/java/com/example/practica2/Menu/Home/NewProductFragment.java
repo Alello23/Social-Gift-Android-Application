@@ -27,8 +27,8 @@ public class NewProductFragment extends Fragment {
         // Infla el diseño del fragmento en el contenedor
         View view = inflater.inflate(R.layout.fragment_new_product, container, false);
 
-        categoryButton = view.findViewById(R.id.openPopupButton_category);
-        priceEditText = view.findViewById(R.id.priceEditText);
+        categoryButton = view.findViewById(R.id.NP_openPopupButton_category);
+        priceEditText = view.findViewById(R.id.NP_priceEditText);
 
         categoryButton.setOnClickListener(new View.OnClickListener() {
             @Override

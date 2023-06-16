@@ -32,6 +32,11 @@
             android:name=".Menu.Menu"
             android:exported="false"/>
 
+        <activity
+            android:name=".Menu.Chat.AddFriend.NewFriendActivity"
+            android:exported="false"/>
+
+
     </application>
 
 </manifest>

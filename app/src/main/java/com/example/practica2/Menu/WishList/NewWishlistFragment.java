@@ -32,7 +32,7 @@ public class NewWishlistFragment extends Fragment {
         // Infla el diseño del fragmento en el contenedor
         View view = inflater.inflate(R.layout.fragment_new_wishlist, container, false);
 
-        openDatePickerButton = view.findViewById(R.id.openPopupButton);
+        openDatePickerButton = view.findViewById(R.id.NW_openPopupButton_date);
         openDatePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +40,7 @@ public class NewWishlistFragment extends Fragment {
             }
         });
 
-        openTimePickerButton = view.findViewById(R.id.openPopupButton_time);
+        openTimePickerButton = view.findViewById(R.id.NW_openPopupButton_time);
         openTimePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

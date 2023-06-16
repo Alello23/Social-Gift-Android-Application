@@ -68,6 +68,12 @@
     <string name="hint_description_product">Juicy apple...</string>
     <string name="Create_Button_product">Create</string>
 
+    <!-- New Friend -->
+    <string name="New_Friend">Add friend</string>
+    <string name="Request_succes">Sent successfully</string>
+    <string name="Accepted">Accepted successfully</string>
+    <string name="Rejected">Rejected successfully</string>
+
     <!-- Chat -->
     <string name="hint_chat">Type Message</string>
 

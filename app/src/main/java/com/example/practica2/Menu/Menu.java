@@ -1,5 +1,6 @@
 package com.example.practica2.Menu;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,6 @@ import com.example.practica2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Menu extends AppCompatActivity {
-    private String token;
     RequestQueue requestQueue;
     private BottomNavigationView bottomNavigationView;
 
@@ -26,7 +26,7 @@ public class Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        this.token = getIntent().getStringExtra("User");
+        saveToSharedPrefs(getIntent().getStringExtra("User"));
 
         requestQueue = Volley.newRequestQueue(Menu.this);
         bottomNavigationView = findViewById(R.id.ME_bottomNavigationView);
@@ -45,8 +45,7 @@ public class Menu extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.navigation_chat){
-//                openFragment(new ChatFragment());
-                openFragment(new NewProductFragment());
+                openFragment(new ChatFragment(requestQueue));
                 return true;
             }
             if (item.getItemId() == R.id.navigation_wishlist){
@@ -54,7 +53,7 @@ public class Menu extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.navigation_account){
-                openFragment(new AccountFragment(token, requestQueue));
+                openFragment(new AccountFragment(requestQueue));
                 return true;
             }
             return false;
@@ -67,5 +66,15 @@ public class Menu extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.ME_fragmentContainerView, fragment);
         fragmentTransaction.commit();
+    }
+    public void saveToSharedPrefs(String token) {
+        SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = sharedPrefs.edit();
+        prefsEditor.putString("token", token);
+        prefsEditor.apply();
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

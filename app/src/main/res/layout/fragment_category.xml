@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/undo" />
 
     <SearchView
-        android:id="@+id/CA_searchView_FC"
+        android:id="@+id/CA_searchView"
         android:layout_width="0dp"
         android:layout_height="30dp"
 
