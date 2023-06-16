@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/SignUpTitle"
+        android:id="@+id/SU_SignUpTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUpTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/SU_SignUpTitle" />
 
     <TextView
         android:id="@+id/SU_TitleLastNameBox"
@@ -130,7 +130,7 @@
         app:layout_constraintTop_toBottomOf="@+id/SU_SignInLink"
         app:layout_constraintVertical_bias="0.0" />
     <ImageView
-        android:id="@+id/avatarImageView"
+        android:id="@+id/SU_AvatarImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/default_avatar"

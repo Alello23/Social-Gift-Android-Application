@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/avatarImage_2"
+        android:id="@+id/GI_avatarImage_2"
         android:layout_width="143dp"
         android:layout_height="143dp"
         android:background="@drawable/rounded_image"
@@ -28,8 +28,8 @@
         android:layout_gravity="center_vertical"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:layout_constraintStart_toEndOf="@+id/avatarImage_2"
-        app:layout_constraintTop_toTopOf="@+id/avatarImage_2" />
+        app:layout_constraintStart_toEndOf="@+id/GI_avatarImage_2"
+        app:layout_constraintTop_toTopOf="@+id/GI_avatarImage_2" />
 
 
     <TextView
@@ -41,7 +41,7 @@
         android:text="TextView"
         android:textColor="@android:color/background_dark"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/avatarImage_2"
+        app:layout_constraintStart_toEndOf="@+id/GI_avatarImage_2"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
@@ -60,8 +60,8 @@
         android:layout_height="40dp"
         android:layout_marginStart="19dp"
         android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarImage_2"
-        app:layout_constraintStart_toEndOf="@+id/avatarImage_2" />
+        app:layout_constraintBottom_toBottomOf="@+id/GI_avatarImage_2"
+        app:layout_constraintStart_toEndOf="@+id/GI_avatarImage_2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

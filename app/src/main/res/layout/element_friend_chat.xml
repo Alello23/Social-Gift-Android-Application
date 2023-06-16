@@ -4,7 +4,7 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/avatarImageView"
+        android:id="@+id/FC_avatarImageView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/default_avatar"
@@ -18,15 +18,15 @@
         android:layout_marginStart="8dp">
 
         <TextView
-            android:id="@+id/senderTextView"
+            android:id="@+id/FC_senderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="John Doe"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/messageTextView"
+            android:id="@+id/FC_messageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hello, how are you?"
@@ -35,7 +35,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/timestampTextView"
+        android:id="@+id/FC_timestampTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="12:34 PM"

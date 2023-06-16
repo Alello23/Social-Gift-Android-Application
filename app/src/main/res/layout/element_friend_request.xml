@@ -5,7 +5,7 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/avatarImageView"
+        android:id="@+id/FR_avatarImageView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/default_avatar"
@@ -19,7 +19,7 @@
         android:layout_marginStart="8dp">
 
         <TextView
-            android:id="@+id/senderTextView"
+            android:id="@+id/FR_senderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="John Doe"
@@ -34,15 +34,15 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/FR_accept_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/accept_button"
+            android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/accept_button" />
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/FR_refuse_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/reject_button"

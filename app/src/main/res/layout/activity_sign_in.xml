@@ -7,7 +7,7 @@
     tools:context=".Login_Register.MainActivity">
 
     <TextView
-        android:id="@+id/SignUpTitle"
+        android:id="@+id/SI_SignUpTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -43,7 +43,7 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUpTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/SI_SignUpTitle" />
 
     <EditText
         android:id="@+id/SI_PasswordBox"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/SI_NameBox" />
 
     <TextView
-        android:id="@+id/SITitlePasswordBox"
+        android:id="@+id/SI_TitlePasswordBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Password_SI"

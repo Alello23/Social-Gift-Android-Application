@@ -7,7 +7,7 @@
 
 
     <ImageView
-        android:id="@+id/PI_back_button"
+        android:id="@+id/PR_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -22,11 +22,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PI_back_button"
+        app:layout_constraintTop_toBottomOf="@+id/PR_back_button"
         app:srcCompat="@drawable/default_product_image" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/PR_button_AddtoWishList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/PR_wishlist_image" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/PR_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
