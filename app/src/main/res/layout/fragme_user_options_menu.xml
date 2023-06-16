@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/configurationTextView"
+            android:id="@+id/UO_configurationTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -21,7 +21,7 @@
             android:background="#000000" />
 
         <TextView
-            android:id="@+id/addFriendTextView"
+            android:id="@+id/UO_addFriendTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -33,7 +33,7 @@
             android:background="#000000" />
 
         <TextView
-            android:id="@+id/logoutTextView"
+            android:id="@+id/UO_logoutTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Log Out"

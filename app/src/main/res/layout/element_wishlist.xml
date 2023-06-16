@@ -12,7 +12,7 @@
         android:background="@drawable/rounded_corners" />
 
     <ImageView
-        android:id="@+id/avatarImage_FC"
+        android:id="@+id/WI_avatarImage_FC"
         android:layout_width="143dp"
         android:layout_height="143dp"
         android:layout_marginStart="12dp"
@@ -32,7 +32,7 @@
         tools:layout_editor_absoluteY="7dp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/WI_edit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
@@ -44,13 +44,13 @@
         android:layout_gravity="center_vertical"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:layout_constraintStart_toEndOf="@+id/avatarImage_FC"
-        app:layout_constraintTop_toTopOf="@+id/avatarImage_FC"
+        app:layout_constraintStart_toEndOf="@+id/WI_avatarImage_FC"
+        app:layout_constraintTop_toTopOf="@+id/WI_avatarImage_FC"
         />
 
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/WI_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
@@ -58,8 +58,8 @@
         android:text="TextView"
         android:textColor="@android:color/white"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/avatarImage_FC"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintStart_toEndOf="@+id/WI_avatarImage_FC"
+        app:layout_constraintTop_toBottomOf="@+id/WI_edit_button" />
 
 
 

@@ -16,7 +16,7 @@
         tools:layout_editor_absoluteY="17dp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/GI_title_WishList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
@@ -33,7 +33,7 @@
 
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/GI_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
@@ -42,20 +42,20 @@
         android:textColor="@android:color/background_dark"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/GI_avatarImage_2"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/GI_title_WishList" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/GI_Price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintBottom_toBottomOf="@+id/GI_title_WishList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintTop_toTopOf="@+id/GI_title_WishList" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/GI_chat_remove_button"
         android:layout_width="104dp"
         android:layout_height="40dp"
         android:layout_marginStart="19dp"

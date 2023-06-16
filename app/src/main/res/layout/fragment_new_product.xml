@@ -14,7 +14,7 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <ImageView
-        android:id="@+id/avatarImage_FC"
+        android:id="@+id/NP_avatarImage_FC"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="19dp"
@@ -26,42 +26,42 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/NP_Text_NewProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Title_new_Product"
         android:textSize="20dp"
         android:textStyle="bold"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarImage_FC"
+        app:layout_constraintBottom_toBottomOf="@+id/NP_avatarImage_FC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/avatarImage_FC" />
+        app:layout_constraintTop_toTopOf="@+id/NP_avatarImage_FC" />
 
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/NP_button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintBottom_toBottomOf="@+id/NP_Text_NewProduct"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/NP_Text_NewProduct"
         app:srcCompat="@drawable/undo_white" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/NP_Title_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/Title_of_Product"
         android:textSize="20dp"
         android:textColor="@android:color/white"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintStart_toEndOf="@+id/NP_button_back"
+        app:layout_constraintTop_toBottomOf="@+id/NP_button_back" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/NP_editTitleText"
         style="@style/Widget.AppCompat.AutoCompleteTextView"
         android:layout_width="0dp"
         android:layout_height="33dp"
@@ -72,22 +72,22 @@
         android:hint="@string/hint_title_product"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintStart_toStartOf="@+id/NP_Title_Text"
+        app:layout_constraintTop_toBottomOf="@+id/NP_Title_Text" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/NP_Text_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
         android:text="@string/Description_of_Product"
         android:textColor="@android:color/white"
         android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="@+id/editTextText3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintStart_toStartOf="@+id/NP_editTitleText"
+        app:layout_constraintTop_toBottomOf="@+id/NP_editTitleText" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/NP_editText_description"
         style="@style/Widget.AppCompat.AutoCompleteTextView"
         android:layout_width="0dp"
         android:layout_height="156dp"
@@ -98,23 +98,23 @@
         android:hint="@string/hint_description_product"
         android:inputType="text|textMultiLine|textCapSentences"
         android:scrollbars="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText3"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintEnd_toEndOf="@+id/NP_editTitleText"
+        app:layout_constraintStart_toStartOf="@+id/NP_Text_description"
+        app:layout_constraintTop_toBottomOf="@+id/NP_Text_description" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/NP_pricetext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
         android:text="@string/price_Product"
         android:textColor="@android:color/white"
         android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="@+id/editTextText4"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintStart_toStartOf="@+id/NP_editText_description"
+        app:layout_constraintTop_toBottomOf="@+id/NP_editText_description" />
 
     <EditText
-        android:id="@+id/priceEditText"
+        android:id="@+id/NP_priceEditText"
         style="@style/Widget.AppCompat.AutoCompleteTextView"
         android:layout_width="131dp"
         android:layout_height="48dp"
@@ -123,22 +123,22 @@
         android:ems="10"
         android:hint="@string/Select_price"
         android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintStart_toStartOf="@+id/NP_pricetext"
+        app:layout_constraintTop_toBottomOf="@+id/NP_pricetext" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/NP_categorytext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/category_Product"
         android:textColor="@android:color/white"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
-        app:layout_constraintStart_toStartOf="@+id/openPopupButton_category"
-        app:layout_constraintTop_toTopOf="@+id/textView11" />
+        app:layout_constraintBottom_toBottomOf="@+id/NP_pricetext"
+        app:layout_constraintStart_toStartOf="@+id/NP_openPopupButton_category"
+        app:layout_constraintTop_toTopOf="@+id/NP_pricetext" />
 
     <Button
-        android:id="@+id/openPopupButton_category"
+        android:id="@+id/NP_openPopupButton_category"
         style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -146,12 +146,12 @@
         android:onClick="showTimePickerPopup"
         android:text="@string/Select_cagegory"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/priceEditText"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText4"
-        app:layout_constraintTop_toTopOf="@+id/priceEditText" />
+        app:layout_constraintBottom_toBottomOf="@+id/NP_priceEditText"
+        app:layout_constraintEnd_toEndOf="@+id/NP_editText_description"
+        app:layout_constraintTop_toTopOf="@+id/NP_priceEditText" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/NP_button_Create"
         style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="133dp"
         android:layout_height="57dp"
@@ -163,16 +163,16 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/NP_imageNewProduct"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="11dp"
         android:layout_marginBottom="11dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="@+id/openPopupButton_category"
+        app:layout_constraintBottom_toTopOf="@+id/NP_button_Create"
+        app:layout_constraintEnd_toEndOf="@+id/NP_openPopupButton_category"
         app:layout_constraintHorizontal_bias="0.688"
-        app:layout_constraintStart_toStartOf="@+id/priceEditText"
-        app:layout_constraintTop_toBottomOf="@+id/priceEditText"
+        app:layout_constraintStart_toStartOf="@+id/NP_priceEditText"
+        app:layout_constraintTop_toBottomOf="@+id/NP_priceEditText"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/default_product_image" />
 
