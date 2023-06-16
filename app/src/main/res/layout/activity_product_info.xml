@@ -7,7 +7,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/PI_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -17,12 +17,12 @@
         app:srcCompat="@drawable/undo" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/PR_wishlist_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/PI_back_button"
         app:srcCompat="@drawable/default_product_image" />
 
     <Button
@@ -36,13 +36,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/PR_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintStart_toStartOf="@+id/PR_wishlist_image"
+        app:layout_constraintTop_toBottomOf="@+id/PR_wishlist_image" />
 
     <TextView
         android:id="@+id/textView14"
@@ -50,26 +50,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintEnd_toEndOf="@+id/PR_wishlist_image"
+        app:layout_constraintTop_toBottomOf="@+id/PR_wishlist_image" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/PR_description_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/product_description"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintStart_toStartOf="@+id/PR_title"
+        app:layout_constraintTop_toBottomOf="@+id/PR_title" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/PR_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintStart_toStartOf="@+id/PR_description_title"
+        app:layout_constraintTop_toBottomOf="@+id/PR_description_title" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
