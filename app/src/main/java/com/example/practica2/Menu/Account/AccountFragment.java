@@ -1,12 +1,16 @@
 package com.example.practica2.Menu.Account;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -16,6 +20,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.practica2.Login_Register.MainActivity;
+import com.example.practica2.Login_Register.SignUpActivity;
+import com.example.practica2.Menu.Menu;
 import com.example.practica2.R;
 
 import org.json.JSONException;
@@ -26,23 +33,35 @@ import java.util.Map;
 
 public class AccountFragment extends Fragment {
     private String token;
+    private TextView deleteAccount;
     private RequestQueue requestQueue;
     private TextView editButton;
     private EditText nameEditText, lastNameEditText, emailEditText;
+    private String userID;
 
     public AccountFragment(String token, RequestQueue requestQueue) {
         this.token = token;
         this.requestQueue = requestQueue;
+        // Constructor público requerido vacío
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Infla el diseño del fragmento en el contenedor
         View view = inflater.inflate(R.layout.fragment_account, container, false);
 
+        deleteAccount = view.findViewById(R.id.P_deleteAccount);
         editButton = view.findViewById(R.id.P_editAccount);
         nameEditText = view.findViewById(R.id.nameTextView);
         lastNameEditText = view.findViewById(R.id.lastNameTextView);
         emailEditText = view.findViewById(R.id.emailTextView);
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Aquí puedes implementar la acción que deseas realizar al hacer clic en el texto
+                deleteUser();
+            }
+        });
 
         // Decode JWT to get user id
         String[] splitToken = token.split("\\.");
@@ -51,8 +70,8 @@ public class AccountFragment extends Fragment {
 
         try {
             JSONObject jsonObject = new JSONObject(jsonBody);
-            String userId = jsonObject.getString("id");
-            getUserDetails(userId);
+            userID = jsonObject.getString("id");
+            getUserDetails(userID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -65,12 +84,12 @@ public class AccountFragment extends Fragment {
                     nameEditText.setEnabled(false);
                     lastNameEditText.setEnabled(false);
                     emailEditText.setEnabled(false);
-                    editButton.setText("Edit");
+                    editButton.setText(R.string.edit_account);
                 } else {
                     nameEditText.setEnabled(true);
                     lastNameEditText.setEnabled(true);
                     emailEditText.setEnabled(true);
-                    editButton.setText("Save");
+                    editButton.setText(R.string.save_account);
                 }
             }
         });
@@ -115,32 +134,39 @@ public class AccountFragment extends Fragment {
     }
 
     private void updateUser() {
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("name", nameEditText.getText().toString());
+            jsonParams.put("last_name", lastNameEditText.getText().toString());
+            jsonParams.put("email", emailEditText.getText().toString());
+            jsonParams.put("image", "https://balandrau.salle.url.edu/i3/repositoryimages/photo/47601a8b-dc7f-41a2-a53b-19d2e8f54cd0.png");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
-        StringRequest putRequest = new StringRequest(Request.Method.PUT, url,
-                new Response.Listener<String>() {
+        JsonObjectRequest putRequest = new JsonObjectRequest(Request.Method.PUT, url, jsonParams,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        // handle response here
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(getContext(), "yay!", Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        String errorResponse = null;
+                        try {
+                            errorResponse = new String(error.networkResponse.data, "UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Log.e("error", errorResponse);
                         // Handle error here
                     }
                 }
         ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("name", nameEditText.getText().toString());
-                params.put("last_name", lastNameEditText.getText().toString());
-                params.put("email", emailEditText.getText().toString());
-                // Add password if necessary
-                params.put("password", "passwordHere");
-                params.put("image", "https://balandrau.salle.url.edu/i3/repositoryimages/photo/47601a8b-dc7f-41a2-a53b-19d2e8f54cd0.png");
-                return params;
-            }
 
             @Override
             public Map<String, String> getHeaders() {
@@ -151,5 +177,53 @@ public class AccountFragment extends Fragment {
         };
 
         requestQueue.add(putRequest);
-    }
+    }
+
+    private void deleteUser() {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            String errorString = new String(error.networkResponse.data, "UTF-8");
+                            Log.e("error", errorString);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        // Handle error response
+                        if (error.networkResponse != null) {
+                            if(error.networkResponse.statusCode == 400) {
+                                Toast.makeText(getActivity(), R.string.Error_400, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 401) {
+                                Toast.makeText(getActivity(), R.string.Error_401, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 406) {
+                                Toast.makeText(getActivity(), R.string.Error_406, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        requestQueue.add(request);
+    }
 }

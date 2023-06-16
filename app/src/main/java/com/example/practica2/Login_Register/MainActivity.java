@@ -1,6 +1,9 @@
 package com.example.practica2.Login_Register;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -74,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("email", UserName.getText().toString());
-            jsonParams.put("password", Password.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -115,4 +117,5 @@ public class MainActivity extends AppCompatActivity {
                 });
         requestQueue.add(request);
     }
+
 }

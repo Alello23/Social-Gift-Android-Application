@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/avatarImage_FC"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="19dp"
+        android:background="@drawable/circle_background"
+        android:contentDescription="Avatar"
+        android:src="@drawable/default_avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <SearchView
+        android:id="@+id/searchView_FC"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="11dp"
+
+        android:background="@drawable/rounded_corners_gray"
+        android:queryHint="Buscar"
+        app:layout_constraintBottom_toBottomOf="@+id/avatarImage_FC"
+        app:layout_constraintEnd_toStartOf="@+id/avatarImage_FC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/avatarImage_FC" />
+
+    <TextView
+        android:id="@+id/myChat_FC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/gift_chat_FC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gift_chat_FC" />
+
+    <View
+        android:id="@+id/separator_1"
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toStartOf="@+id/gift_chat_FC"
+        app:layout_constraintStart_toEndOf="@+id/myChat_FC"
+        tools:layout_editor_absoluteY="94dp" />
+
+    <TextView
+        android:id="@+id/gift_chat_FC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/separator_2"
+        app:layout_constraintEnd_toStartOf="@+id/request_FC"
+        app:layout_constraintStart_toEndOf="@+id/myChat_FC"
+        app:layout_constraintTop_toTopOf="@+id/separator_2" />
+
+    <View
+        android:id="@+id/separator_2"
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toStartOf="@+id/request_FC"
+        app:layout_constraintStart_toEndOf="@+id/gift_chat_FC"
+        app:layout_constraintTop_toBottomOf="@+id/avatarImage_FC" />
+
+    <TextView
+        android:id="@+id/request_FC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/separator_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/separator_2" />
+
+    <ImageView
+        android:id="@+id/add_friend_bt_FC"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/add_friend_button" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chats_container_FC"
+        android:layout_width="409dp"
+        android:layout_height="595dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/separator_1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

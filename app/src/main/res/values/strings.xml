@@ -44,6 +44,7 @@
     <string name="last_name">Last Name</string>
     <string name="email">Email</string>
     <string name="edit_account">Edit Account</string>
+    <string name="save_account">Save</string>
     <string name="delete_account">Delete Account</string>
     <string name="logout">Log out</string>
 
@@ -79,6 +80,9 @@
 
     <!-- Chat -->
     <string name="hint_chat">Type Message</string>
+
+    <!-- Friends chat -->
+    <string name="">Type Message</string>
 
 
 

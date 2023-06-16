@@ -18,13 +18,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarImage"
+        app:layout_constraintBottom_toBottomOf="@+id/avatarImage_FC"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/avatarImage"
+        app:layout_constraintTop_toTopOf="@+id/avatarImage_FC"
         app:srcCompat="@drawable/undo" />
 
     <ImageView
-        android:id="@+id/avatarImage"
+        android:id="@+id/avatarImage_FC"
         android:layout_width="62dp"
         android:layout_height="62dp"
         android:layout_marginStart="24dp"
@@ -44,8 +44,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="normal"
-        app:layout_constraintStart_toEndOf="@+id/avatarImage"
-        app:layout_constraintTop_toTopOf="@+id/avatarImage" />
+        app:layout_constraintStart_toEndOf="@+id/avatarImage_FC"
+        app:layout_constraintTop_toTopOf="@+id/avatarImage_FC" />
 
 
     <TextView
@@ -82,9 +82,9 @@
         android:layout_width="41dp"
         android:layout_height="40dp"
         android:layout_marginEnd="36dp"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarImage"
+        app:layout_constraintBottom_toBottomOf="@+id/avatarImage_FC"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/avatarImage"
+        app:layout_constraintTop_toTopOf="@+id/avatarImage_FC"
         app:srcCompat="@drawable/wishlist_friend" />
 
 
