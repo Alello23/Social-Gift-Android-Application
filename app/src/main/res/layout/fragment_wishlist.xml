@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/avatarImage_FC"
+        android:id="@+id/WIT_avatarImage_FC"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="19dp"
@@ -18,32 +18,35 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/WIT_text_WishList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Title_wishlist"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarImage_FC"
+        app:layout_constraintBottom_toBottomOf="@+id/WIT_avatarImage_FC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/avatarImage_FC" />
+        app:layout_constraintTop_toTopOf="@+id/WIT_avatarImage_FC" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/WIT_input_gift"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatarImage_FC"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WIT_avatarImage_FC"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/WIT_button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintBottom_toBottomOf="@+id/WIT_text_WishList"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/WIT_text_WishList"
         app:srcCompat="@drawable/undo" />
 
 

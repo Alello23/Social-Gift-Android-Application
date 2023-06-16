@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/avatarImage_FC"
+        android:id="@+id/WIS_avatarImage_FC"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="19dp"
@@ -18,19 +18,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/wishlists_title_WS"
+        android:id="@+id/WIS_wishlists_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="33dp"
         android:text="@string/Title_wishlist"
         android:textStyle="bold"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarImage_FC"
+        app:layout_constraintBottom_toBottomOf="@+id/WIS_avatarImage_FC"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/avatarImage_FC" />
+        app:layout_constraintTop_toTopOf="@+id/WIS_avatarImage_FC" />
 
     <ImageView
-        android:id="@+id/add_friend_bt_FC"
+        android:id="@+id/WIS_add_friend_bt"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginEnd="28dp"
@@ -40,11 +40,14 @@
         app:srcCompat="@drawable/add_list" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/WIS_input_gift"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatarImage_FC"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WIS_avatarImage_FC"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
