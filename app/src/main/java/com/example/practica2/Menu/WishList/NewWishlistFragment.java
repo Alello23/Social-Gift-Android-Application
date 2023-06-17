@@ -161,12 +161,6 @@ public class NewWishlistFragment extends Fragment {
                         } catch (UnsupportedEncodingException e) {
                             throw new RuntimeException(e);
                         }
-                        try {
-                            String errorResponse = new String(error.networkResponse.data, "UTF-8");
-                            Log.e("error",errorResponse);
-                        } catch (UnsupportedEncodingException e) {
-                            throw new RuntimeException(e);
-                        }
 
                         // Manejar el error de la solicitud
                         if (error.networkResponse != null) {
