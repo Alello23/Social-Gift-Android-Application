@@ -21,6 +21,7 @@ import com.example.practica2.Menu.Account.*;
 import com.example.practica2.Menu.Chats.ChatFragment;
 import com.example.practica2.Menu.Home.HomeFragment;
 import com.example.practica2.Menu.WishList.NewWishlistFragment;
+import com.example.practica2.Menu.WishList.NewWishlistFragment;
 import com.example.practica2.Menu.WishList.WishListFragment;
 import com.example.practica2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
