@@ -42,8 +42,7 @@ public class NewProductFragment extends Fragment {
 
     private void showCategoryList() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Select Category")
-                .setItems(categoryOptions, (dialog, which) -> {
+        builder.setTitle("Select Category").setItems(categoryOptions, (dialog, which) -> {
                     String selectedCategory = categoryOptions[which];
                     // Realiza las operaciones que desees con la categoría seleccionada
                     categoryButton.setText(selectedCategory);

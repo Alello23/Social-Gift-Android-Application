@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +11,6 @@
         android:layout_height="30dp"
         android:layout_marginStart="27dp"
         android:layout_marginEnd="11dp"
-
         android:background="@drawable/rounded_corners_gray"
         android:queryHint="Buscar"
         app:layout_constraintBottom_toBottomOf="@+id/HO_avatarImage_FC"
@@ -41,37 +41,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HO_avatarImage_FC"/>
 
-    <HorizontalScrollView
-        android:id="@+id/categoryScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/HO_categoryTextView"
-        app:layout_constraintTop_toBottomOf="@+id/HO_categoryTextView">
-
-        <!--你的横向Category布局-->
-
-    </HorizontalScrollView>
-
     <TextView
         android:id="@+id/HO_shopTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
         android:text="Shop"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/HO_categoryTextView"
-        app:layout_constraintTop_toBottomOf="@+id/categoryScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/HO_Category" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/HO_shopRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HO_shopTextView" />
+
+    <ImageView
+        android:id="@+id/HO_new_product_bt"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/new_prouct" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/HO_Category"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/HO_avatarImage_FC"
+        app:layout_constraintStart_toStartOf="@+id/HO_categoryTextView"
+        app:layout_constraintTop_toBottomOf="@+id/HO_categoryTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

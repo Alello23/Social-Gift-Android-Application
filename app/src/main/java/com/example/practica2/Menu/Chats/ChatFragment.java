@@ -14,6 +14,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +56,11 @@ public class ChatFragment extends Fragment{
     public ChatFragment(RequestQueue requestQueue, String userID) {
         this.userID = userID;
         this.requestQueue = requestQueue;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -149,7 +155,7 @@ public class ChatFragment extends Fragment{
 
         requestQueue.add(jsonObjectRequest);
     }
-    private void updateUIMyFriends() {
+    public void updateUIMyFriends() {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {

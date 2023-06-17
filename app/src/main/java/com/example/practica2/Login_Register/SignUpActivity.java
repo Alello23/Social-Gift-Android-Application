@@ -123,6 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(String imageUrl) {
                     UrlImage = imageUrl;
+                    newAccount();
                 }
 
                 @Override
@@ -136,11 +137,7 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    private void postSignUpData() {
-        if (imageUri != null){
-            UploadImage();
-        }
+    private void newAccount (){
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("name", NameBox.getText().toString());
@@ -188,6 +185,14 @@ public class SignUpActivity extends AppCompatActivity {
         ) {
         };
         requestQueue.add(request);
+    }
+
+    private void postSignUpData() {
+        if (imageUri != null){
+            UploadImage();
+        }else{
+           newAccount();
+        }
     }
     @Override
     public void onBackPressed() {

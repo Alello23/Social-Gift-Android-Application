@@ -34,62 +34,74 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Menu extends AppCompatActivity {
-    RequestQueue requestQueue;
+    private RequestQueue requestQueue;
     private BottomNavigationView bottomNavigationView;
-    private static String imageURL;
     private String userID;
+    private HomeFragment home;
+    private ChatFragment chat;
+    private WishListFragment wishlists;
+    private AccountFragment account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        decodeJWT();
         setContentView(R.layout.activity_menu);
         saveToSharedPrefs(getIntent().getStringExtra("User"));
 
         requestQueue = Volley.newRequestQueue(Menu.this);
         bottomNavigationView = findViewById(R.id.ME_bottomNavigationView);
 
+        home = new HomeFragment(requestQueue);
+        chat = new ChatFragment(requestQueue, userID);
+        wishlists = new WishListFragment(requestQueue);
+        account = new AccountFragment(requestQueue, userID);
+
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.ME_fragmentContainerView);
 
         if (fragment == null){
-            fragment = new HomeFragment();
-            fm.beginTransaction().add(R.id.ME_fragmentContainerView,fragment).commit();
+            fragment = home;
+            fm.beginTransaction().add(R.id.ME_fragmentContainerView, fragment).commit();
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navigation_home){
-                openFragment(new HomeFragment());
+                openFragment(home);
                 return true;
             }
             if (item.getItemId() == R.id.navigation_chat){
-                openFragment(new ChatFragment(requestQueue, userID));
+                openFragment(chat);
                 return true;
             }
             if (item.getItemId() == R.id.navigation_wishlist){
-                openFragment(new WishListFragment());
-//                openFragment(new NewWishlistFragment());
+                openFragment(wishlists);
                 return true;
             }
             if (item.getItemId() == R.id.navigation_account){
-                openFragment(new AccountFragment(requestQueue, userID));
+                openFragment(account);
                 return true;
             }
             return false;
         });
-        decodeJWT();
-        openFragment(new HomeFragment());
+
+        openFragment(home);
     }
+
     private void openFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.ME_fragmentContainerView, fragment);
         fragmentTransaction.commit();
     }
+
     public void saveToSharedPrefs(String token) {
         SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = sharedPrefs.edit();
         prefsEditor.putString("token", token);
         prefsEditor.apply();
     }
+
     public void saveID(String id) {
         SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = sharedPrefs.edit();
@@ -99,6 +111,7 @@ public class Menu extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        // Disable back button functionality
     }
 
     public String getFromSharedPrefs() {
@@ -106,7 +119,8 @@ public class Menu extends AppCompatActivity {
         String valor = sharedPrefs.getString("token", "default");
         return valor;
     }
-    private void decodeJWT (){
+
+    private void decodeJWT() {
         // Decode JWT to get user id
         String[] splitToken = getFromSharedPrefs().split("\\.");
         byte[] decodedBytes = Base64.decode(splitToken[1], Base64.URL_SAFE);

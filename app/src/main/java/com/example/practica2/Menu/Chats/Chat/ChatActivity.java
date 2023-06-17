@@ -1,9 +1,11 @@
 package com.example.practica2.Menu.Chats.Chat;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -88,6 +90,10 @@ public class ChatActivity extends AppCompatActivity {
                 String mensaje = input.getText().toString();
                 input.setText("");
                 sendMessage(mensaje);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                // Oculta el teclado virtual
+                imm.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
             }
         });
 
@@ -176,6 +182,8 @@ public class ChatActivity extends AppCompatActivity {
                             }
                             adapter = new MessageAdapter(messageList, ChatActivity.this,ownID);
                             list.setAdapter(adapter);
+                            list.scrollToPosition(adapter.getItemCount() - 1);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -237,7 +245,7 @@ public class ChatActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        messageList.add(new Message_user(query,ownID,id));
+                       updateMessage();
                     }
                 }, new Response.ErrorListener() {
 

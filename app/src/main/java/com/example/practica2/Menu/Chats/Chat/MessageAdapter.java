@@ -33,12 +33,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
     @Override
     public void onBindViewHolder(MessageHolder holder, int position) {
         Message_user message = messages.get(position);
-        holder.bind(message);
-        if (message.getId() == own) {
-            holder.setGravity(Gravity.END);
-        } else {
-            holder.setGravity(Gravity.START);
-        }
+        holder.bind(message,own);
     }
     @Override
     public int getItemCount() {

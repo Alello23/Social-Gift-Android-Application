@@ -1,9 +1,14 @@
 package com.example.practica2.Menu.WishList;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +19,25 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.practica2.R;
 
-import java.util.Calendar;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewWishlistFragment extends Fragment {
     private EditText editTextTitle;
@@ -32,8 +45,12 @@ public class NewWishlistFragment extends Fragment {
     private Button openDatePickerButton;
     private Button openTimePickerButton;
     private Button createWishlistButton;
+    private RequestQueue requestQueue;
+    private WishListFragment wishListFragment;
 
-    public NewWishlistFragment() {
+    public NewWishlistFragment(WishListFragment wishListFragment, RequestQueue requestQueue) {
+        this.wishListFragment = wishListFragment;
+        this.requestQueue = requestQueue;
         // Constructor público requerido vacío
     }
 
@@ -78,7 +95,7 @@ public class NewWishlistFragment extends Fragment {
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int selectedYear, int monthOfYear, int dayOfMonth) {
                 String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + selectedYear;
@@ -94,7 +111,7 @@ public class NewWishlistFragment extends Fragment {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(requireContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String selectedTime = hourOfDay + ":" + minute;
@@ -113,58 +130,81 @@ public class NewWishlistFragment extends Fragment {
 
         String dateTime = date + "T" + time + "Z";
 
-        OkHttpClient client = new OkHttpClient().newBuilder().build();
-        MediaType mediaType = MediaType.parse("application/json");
-        String jsonBody = "{\n  \"name\": \"" + title + "\",\n  \"description\": \"" + description + "\",\n  \"end_date\": \"" + dateTime + "\"\n}";
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
 
-        RequestBody body = RequestBody.create(mediaType, jsonBody);
-        Request request = new Request.Builder()
-                .url("https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists")
-                .method("POST", body)
-                .addHeader("accept", "application/json")
-                .addHeader("Content-Type", "application/json")
-                .build();
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("name", title);
+            jsonBody.put("description", description);
+            jsonBody.put("end_date", dateTime);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Response response = client.newCall(request).execute();
-                    // Convert the response to a string
-                    String responseStr = response.body().string();
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest
+                (Request.Method.POST, url, jsonBody, new Response.Listener<JSONObject>() {
 
-                    // Pass the response string to the main thread using runOnUiThread
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Handle the response in the main thread
-                            if (response.isSuccessful()) {
-                                // Show success message
-                                Toast.makeText(getActivity(), "Wishlist Created Successfully", Toast.LENGTH_SHORT).show();
-                            } else {
-                                // Handle different error status codes
-                                switch (response.code()) {
-                                    case 400:
-                                    case 406:
-                                        Toast.makeText(getActivity(), "Error: Bad Request or Missing parameters", Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 409:
-                                        Toast.makeText(getActivity(), "Error: The wish list has already been pre-registered", Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 500:
-                                        Toast.makeText(getActivity(), "Error: The wish list has not been created", Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 502:
-                                        Toast.makeText(getActivity(), "Error: Internal Server Error", Toast.LENGTH_SHORT).show();
-                                        break;
-                                }
-                            }
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.ME_fragmentContainerView, wishListFragment);
+                        fragmentTransaction.commit();
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            String errorResponse = new String(error.networkResponse.data, "UTF-8");
+                            Log.e("error",errorResponse);
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
                         }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                        try {
+                            String errorResponse = new String(error.networkResponse.data, "UTF-8");
+                            Log.e("error",errorResponse);
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        // Manejar el error de la solicitud
+                        if (error.networkResponse != null) {
+                            if(error.networkResponse.statusCode == 400) {
+                                Toast.makeText(getActivity(), R.string.Error_400, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 401) {
+                                Toast.makeText(getActivity(), R.string.Error_401, Toast.LENGTH_SHORT).show();
+                            }else if(error.networkResponse.statusCode == 406) {
+                                Toast.makeText(getActivity(), R.string.Error_406, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 410) {
+                                Toast.makeText(getActivity(), R.string.Error_410, Toast.LENGTH_SHORT).show();
+                            }else if(error.networkResponse.statusCode == 500) {
+                                Toast.makeText(getActivity(), R.string.Error_500, Toast.LENGTH_SHORT).show();
+                            }else if(error.networkResponse.statusCode == 502) {
+                                Toast.makeText(getActivity(), R.string.Error_502, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs(getActivity()));
+                return headers;
             }
-        }).start();
+
+        };
+
+        requestQueue.add(jsonArrayRequest);
+    }
+    private String getFromSharedPrefs(Activity activity) {
+        SharedPreferences sharedPrefs = activity.getPreferences(MODE_PRIVATE);
+        String valor = sharedPrefs.getString("token", "default");
+        return valor;
     }
 }

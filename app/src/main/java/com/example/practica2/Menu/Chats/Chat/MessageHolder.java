@@ -37,27 +37,24 @@ import java.util.Map;
 
 public class MessageHolder extends RecyclerView.ViewHolder {
     private TextView content;
+    LinearLayout linearLayout;
     private Activity activity;
     private Message_user message;
 
     public MessageHolder(LayoutInflater inflater, ViewGroup parent, Activity activity) {
         super(inflater.inflate(R.layout.element_messege, parent, false));
         content = itemView.findViewById(R.id.MES_messageTextView);
-
+        linearLayout = itemView.findViewById(R.id.MES_layout);
         this.activity = activity;
     }
-    public void bind(Message_user message) {
+    public void bind(Message_user message, int own) {
         this.message = message;
         content.setText(message.getContent());
-    }
-
-    public void setGravity(int gravity) {
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) content.getLayoutParams();
-        params.addRule(RelativeLayout.ALIGN_PARENT_START, 0);
-        params.addRule(RelativeLayout.ALIGN_PARENT_END, 0);
-        params.addRule(gravity);
-        content.setLayoutParams(params);
-
+        if (message.getUserIdSend() == own) {
+            linearLayout.setGravity(Gravity.END);
+        } else {
+            linearLayout.setGravity(Gravity.START);
+        }
     }
 }
 

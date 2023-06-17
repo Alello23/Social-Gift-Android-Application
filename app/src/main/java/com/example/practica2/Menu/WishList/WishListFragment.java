@@ -10,12 +10,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.RequestQueue;
 import com.example.practica2.R;
 
 public class WishListFragment extends Fragment {
     private ImageView addWishListButton;
+    private WishListFragment wishListFragment;
+    private RequestQueue requestQueue;
 
-    public WishListFragment() {
+    public WishListFragment(RequestQueue requestQueue) {
+        wishListFragment = this;
+        this.requestQueue = requestQueue;
         // Constructor público requerido vacío
     }
 
@@ -31,7 +36,7 @@ public class WishListFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.ME_fragmentContainerView, new NewWishlistFragment());
+                fragmentTransaction.replace(R.id.ME_fragmentContainerView, new NewWishlistFragment(wishListFragment, requestQueue));
                 fragmentTransaction.commit();
             }
         });

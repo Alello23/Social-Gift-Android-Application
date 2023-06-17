@@ -242,8 +242,6 @@ public class AccountFragment extends Fragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-
                     }
 
                 }) {
