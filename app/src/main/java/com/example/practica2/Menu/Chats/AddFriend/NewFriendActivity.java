@@ -1,10 +1,7 @@
-package com.example.practica2.Menu.Chat.AddFriend;
+package com.example.practica2.Menu.Chats.AddFriend;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -19,12 +16,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.practica2.ClassObjects.User;
-import com.example.practica2.Login_Register.MainActivity;
-import com.example.practica2.Login_Register.SignUpActivity;
-import com.example.practica2.Menu.Menu;
 import com.example.practica2.R;
 
 import org.json.JSONArray;

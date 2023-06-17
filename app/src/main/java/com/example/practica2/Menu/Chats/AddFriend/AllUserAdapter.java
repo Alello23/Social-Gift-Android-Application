@@ -1,4 +1,4 @@
-package com.example.practica2.Menu.Chat.AddFriend;
+package com.example.practica2.Menu.Chats.AddFriend;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -11,11 +11,11 @@ import com.example.practica2.ClassObjects.User;
 
 import java.util.List;
 
-public class FriendsAdapter extends RecyclerView.Adapter<AllUserHolder> {
+public class AllUserAdapter extends RecyclerView.Adapter<AllUserHolder> {
     private List<User> users;
     private Activity activity;
     private RequestQueue requestQueue;
-    public FriendsAdapter(List<User> users, Activity activity, RequestQueue requestQueue) {
+    public AllUserAdapter(List<User> users, Activity activity, RequestQueue requestQueue) {
         this.users = users;
         this.activity = activity;
         this.requestQueue = requestQueue;

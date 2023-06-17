@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <ImageView
         android:id="@+id/FSC_avatarImage_FC"
         android:layout_width="75dp"
@@ -79,15 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/separator_2" />
 
-    <ImageView
-        android:id="@+id/FSC_add_friend_button"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="58dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/add_friend_button" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/FSC_chats_container_FC"
@@ -103,6 +96,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/separator_1"
         app:layout_constraintVertical_bias="0.0" />
+    <ImageView
+        android:id="@+id/FSC_add_friend_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/add_friend_button" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,13 @@
-package com.example.practica2.Menu.Chat;
+package com.example.practica2.Menu.Chats;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,21 +18,16 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.practica2.ClassObjects.CircleImage;
 import com.example.practica2.ClassObjects.User;
-import com.example.practica2.Login_Register.MainActivity;
-import com.example.practica2.Menu.Chat.AddFriend.AllUserAdapter;
-import com.example.practica2.Menu.Chat.AddFriend.NewFriendActivity;
 import com.example.practica2.R;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RequestHolder extends RecyclerView.ViewHolder {
@@ -43,13 +36,15 @@ public class RequestHolder extends RecyclerView.ViewHolder {
     private ImageView accept;
     private ImageView reject;
     private Activity activity;
+    private RequestAdapter adapter;
     private User user;
-    public RequestHolder(LayoutInflater inflater, ViewGroup parent, Activity activity) {
+    public RequestHolder(LayoutInflater inflater, ViewGroup parent, Activity activity, RequestAdapter adapter) {
         super(inflater.inflate(R.layout.element_friend_request, parent, false));
         avatarImage = itemView.findViewById(R.id.FR_avatarImageView);
         userName = itemView.findViewById(R.id.FR_senderTextView);
         accept = itemView.findViewById(R.id.FR_accept_button);
         reject = itemView.findViewById(R.id.FR_refuse_button);
+        this.adapter = adapter;
 
         this.activity = activity;
     }
@@ -57,7 +52,7 @@ public class RequestHolder extends RecyclerView.ViewHolder {
         this.user = user;
         userName.setText(user.getName());
         try {
-            Picasso.get().load(user.getImage()).into(avatarImage);
+            Picasso.get().load(user.getImage()).transform(new CircleImage()).into(avatarImage);
         }catch (Exception e){
             Log.e("error", "Usuario sin imagen: " + user.getName());
             avatarImage.setImageResource(R.drawable.default_avatar);
@@ -68,6 +63,7 @@ public class RequestHolder extends RecyclerView.ViewHolder {
                 acceptRequest(requestQueue, user.getId());
             }
         });
+
         reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,20 +71,33 @@ public class RequestHolder extends RecyclerView.ViewHolder {
             }
         });
     }
-    public void acceptRequest( RequestQueue requestQueue, int id) {
+    private void removeItem() {
+        int position = getAdapterPosition();
+        if (position != RecyclerView.NO_POSITION) {
+            adapter.removeItem(position); // Llama al método removeItem() del adaptador
+        }
+    }
+    public void acceptRequest(RequestQueue requestQueue, int id) {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.PUT, url, null, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest
+                (Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         Toast.makeText(activity, R.string.Accepted, Toast.LENGTH_SHORT).show();
+                        removeItem();
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+                            String errorResponse = new String(error.networkResponse.data, "UTF-8");
+                            Log.e("error",errorResponse);
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
 
                         // Manejar el error de la solicitud
                         if (error.networkResponse != null) {
@@ -127,12 +136,13 @@ public class RequestHolder extends RecyclerView.ViewHolder {
     public void rejectRequest( RequestQueue requestQueue, int id) {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.DELETE, url, null, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest
+                (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         Toast.makeText(activity, R.string.Rejected, Toast.LENGTH_SHORT).show();
+                        removeItem();
                     }
                 }, new Response.ErrorListener() {
 

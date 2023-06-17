@@ -1,23 +1,16 @@
-package com.example.practica2.Menu.Chat;
+package com.example.practica2.Menu.Chats;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -30,10 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.practica2.ClassObjects.User;
-import com.example.practica2.Login_Register.MainActivity;
-import com.example.practica2.Login_Register.SignUpActivity;
-import com.example.practica2.Menu.Chat.AddFriend.AllUserAdapter;
-import com.example.practica2.Menu.Chat.AddFriend.NewFriendActivity;
+import com.example.practica2.Menu.Chats.AddFriend.NewFriendActivity;
 import com.example.practica2.R;
 
 import org.json.JSONArray;
@@ -41,20 +31,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChatFragment extends Fragment {
-    ImageView add_friend;
-    ImageView accept;
-    ImageView reject;
-    SearchView searchView;
-    RecyclerView list;
-    RequestQueue requestQueue;
-    TextView friendsRequest_bt;
-    RequestAdapter requestAdapter;
+public class ChatFragment extends Fragment{
+    private ImageView add_friend;
+    private SearchView searchView;
+    private RecyclerView list;
+    private RequestQueue requestQueue;
+    private TextView friendsRequest_bt;
+    private TextView myChats_bt;
+    private RequestAdapter requestAdapter;
+    private FriendsAdapter friendsAdapter;
 
 
     public ChatFragment(RequestQueue requestQueue) {
@@ -69,19 +58,16 @@ public class ChatFragment extends Fragment {
         add_friend = view.findViewById(R.id.FSC_add_friend_button);
         searchView = view.findViewById(R.id.FSC_searchView_FC);
         friendsRequest_bt = view.findViewById(R.id.FSC_request_FC);
+        myChats_bt = view.findViewById(R.id.FSC_MyChat_FC);
+
         list = view.findViewById(R.id.FSC_chats_container_FC);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        accept.setOnClickListener(new View.OnClickListener() {
+        add_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateUIRequest();
-            }
-        });
-        reject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateUIRequest();
+                Intent intent = new Intent(getActivity(), NewFriendActivity.class);
+                intent.putExtra("token", getFromSharedPrefs());
+                startActivity(intent);
             }
         });
 
@@ -91,14 +77,13 @@ public class ChatFragment extends Fragment {
                 updateUIRequest();
             }
         });
-        add_friend.setOnClickListener(new View.OnClickListener() {
+        myChats_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NewFriendActivity.class);
-                intent.putExtra("token", getFromSharedPrefs());
-                startActivity(intent);
+                updateUIMyFriends();
             }
         });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -115,10 +100,68 @@ public class ChatFragment extends Fragment {
             }
         });
 
+        updateUIMyFriends();
+
         return view;
     }
     private void performSearch(String query){
 
+    }
+    private void updateUIMyFriends() {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends";
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            List<User> userList = new ArrayList<>();
+                            // Iterar sobre los elementos del arreglo JSON
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject userObject = response.getJSONObject(i);
+                                // Obtener los valores de las propiedades del usuario
+                                int id = userObject.getInt("id");
+                                String name = userObject.getString("name");
+                                String lastName = userObject.getString("last_name");
+                                String email = userObject.getString("email");
+                                String image = userObject.getString("image");
+
+                                userList.add(new User(id,name,lastName,email,image));
+                            }
+                            friendsAdapter = new FriendsAdapter(userList, getActivity(), requestQueue);
+                            list.setAdapter(friendsAdapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Manejar el error de la solicitud
+                        if (error.networkResponse != null) {
+                            if(error.networkResponse.statusCode == 401) {
+                                Toast.makeText(getActivity(), R.string.Error_401, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 500) {
+                                Toast.makeText(getActivity(), R.string.Error_500, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
+                return headers;
+            }
+
+        };
+        requestQueue.add(jsonArrayRequest);
     }
     private void updateUIRequest() {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/requests";

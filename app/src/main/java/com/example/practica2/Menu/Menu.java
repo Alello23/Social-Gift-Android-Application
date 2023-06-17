@@ -11,9 +11,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.practica2.Menu.Account.*;
-import com.example.practica2.Menu.Chat.ChatFragment;
+import com.example.practica2.Menu.Chats.ChatFragment;
 import com.example.practica2.Menu.Home.HomeFragment;
-import com.example.practica2.Menu.Home.NewProductFragment;
+import com.example.practica2.Menu.WishList.NewWishlistFragment;
 import com.example.practica2.Menu.WishList.WishListFragment;
 import com.example.practica2.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -49,7 +49,8 @@ public class Menu extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.navigation_wishlist){
-                openFragment(new WishListFragment());
+//                openFragment(new WishListFragment());
+                openFragment(new NewWishlistFragment());
                 return true;
             }
             if (item.getItemId() == R.id.navigation_account){

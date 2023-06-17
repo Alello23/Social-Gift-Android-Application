@@ -77,12 +77,16 @@
     <!-- Chat -->
     <string name="hint_chat">Type Message</string>
 
+    <!-- Chats -->
+    <string name="empty_chat">Start a conversation!</string>
+
     <!-- Product info -->
     <string name="product_description">Description</string>
     <string name="product_add_to_wishlist">Add to WishList</string>
 
 
     <!-- Error -->
+    <string name="Error_204">User not found</string>
     <string name="Error_400">Bad request</string>
     <string name="Error_401">Wrong username and password combination</string>
     <string name="Error_406">Missing parameters</string>

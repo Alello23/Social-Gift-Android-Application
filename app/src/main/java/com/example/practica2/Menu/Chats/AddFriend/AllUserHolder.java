@@ -1,9 +1,8 @@
-package com.example.practica2.Menu.Chat.AddFriend;
+package com.example.practica2.Menu.Chats.AddFriend;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +19,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.practica2.ClassObjects.CircleImage;
 import com.example.practica2.ClassObjects.User;
-import com.example.practica2.Login_Register.MainActivity;
 import com.example.practica2.R;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class AllUserHolder extends RecyclerView.ViewHolder {
         this.user = user;
         userName.setText(user.getName());
         try {
-            Picasso.get().load(user.getImage()).into(avatarImage);
+            Picasso.get().load(user.getImage()).transform(new CircleImage()).into(avatarImage);
         }catch (Exception e){
             Log.e("error", "Usuario sin imagen: " + user.getName());
             avatarImage.setImageResource(R.drawable.default_avatar);
@@ -66,33 +66,44 @@ public class AllUserHolder extends RecyclerView.ViewHolder {
     public void sendFriendRequest(RequestQueue requestQueue, int id) {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends/" + id;
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
-                    public void onResponse(JSONArray response) {
-                        Toast.makeText(activity, R.string.Request_succes, Toast.LENGTH_SHORT).show();
+                    public void onResponse(JSONObject response) {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            if (success) {
+                                JSONObject payload = response.getJSONObject("payload");
+                                String message = payload.getString("message");
+                                Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity, R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(activity, R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         // Manejar el error de la solicitud
                         if (error.networkResponse != null) {
-                            if(error.networkResponse.statusCode == 400) {
+                            if (error.networkResponse.statusCode == 400) {
                                 Toast.makeText(activity, R.string.Error_400, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 401) {
+                            } else if (error.networkResponse.statusCode == 401) {
                                 Toast.makeText(activity, R.string.Error_401, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 406) {
+                            } else if (error.networkResponse.statusCode == 406) {
                                 Toast.makeText(activity, R.string.Error_406, Toast.LENGTH_SHORT).show();
-                            }else if(error.networkResponse.statusCode == 409) {
+                            } else if (error.networkResponse.statusCode == 409) {
                                 Toast.makeText(activity, R.string.Error_409, Toast.LENGTH_SHORT).show();
-                            }else if(error.networkResponse.statusCode == 410) {
+                            } else if (error.networkResponse.statusCode == 410) {
                                 Toast.makeText(activity, R.string.Error_410, Toast.LENGTH_SHORT).show();
-                            }else if(error.networkResponse.statusCode == 500) {
+                            } else if (error.networkResponse.statusCode == 500) {
                                 Toast.makeText(activity, R.string.Error_500, Toast.LENGTH_SHORT).show();
-                            }else if(error.networkResponse.statusCode == 502) {
+                            } else if (error.networkResponse.statusCode == 502) {
                                 Toast.makeText(activity, R.string.Error_502, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(activity, R.string.Error_Default, Toast.LENGTH_SHORT).show();
@@ -109,11 +120,11 @@ public class AllUserHolder extends RecyclerView.ViewHolder {
                 headers.put("Authorization", "Bearer " + getFromSharedPrefs(activity));
                 return headers;
             }
-
         };
 
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(jsonObjectRequest);
     }
+
     private String getFromSharedPrefs(Activity activity) {
         SharedPreferences sharedPrefs = activity.getPreferences(MODE_PRIVATE);
         String valor = sharedPrefs.getString("token", "default");
