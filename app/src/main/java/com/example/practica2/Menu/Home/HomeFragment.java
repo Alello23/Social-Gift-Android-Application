@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.practica2.ClassObjects.Category;
+import com.example.practica2.ClassObjects.CircleImage;
 import com.example.practica2.ClassObjects.Product;
 import com.example.practica2.ClassObjects.User;
 import com.example.practica2.Menu.Chats.AddFriend.AllUserAdapter;
 import com.example.practica2.Menu.Chats.AddFriend.NewFriendActivity;
 import com.example.practica2.Menu.WishList.NewWishlistFragment;
 import com.example.practica2.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,10 +56,12 @@ public class HomeFragment extends Fragment {
     private ProductAdapter productAdapter;
     private RequestQueue requestQueue;
     private HomeFragment homeFragment;
+    private String userID;
 
-    public HomeFragment(RequestQueue requestQueue) {
+    public HomeFragment(RequestQueue requestQueue, String userID) {
         this.requestQueue = requestQueue;
         homeFragment = this;
+        this.userID = userID;
         // Constructor público requerido vacío
     }
 
@@ -105,9 +111,42 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        updateProfileAvatar();
         updateUICategory();
         updateUIProduct();
         return view;
+    }
+    private void updateProfileAvatar() {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + userID;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Picasso.get().load(response.getString("image")).transform(new CircleImage()).into(avatar);
+                        }catch (Exception e){
+                            Log.e("error", "Usuario sin imagen" );
+                            avatar.setImageResource(R.drawable.default_avatar);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
+                return headers;
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
     }
     private void performSearch(String query){
         String url = "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/search?s=" + query;

@@ -52,9 +52,9 @@ public class Menu extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(Menu.this);
         bottomNavigationView = findViewById(R.id.ME_bottomNavigationView);
 
-        home = new HomeFragment(requestQueue);
+        home = new HomeFragment(requestQueue, userID);
         chat = new ChatFragment(requestQueue, userID);
-        wishlists = new WishListFragment(requestQueue);
+        wishlists = new WishListFragment(requestQueue, userID);
         account = new AccountFragment(requestQueue, userID);
 
         FragmentManager fm = getSupportFragmentManager();
