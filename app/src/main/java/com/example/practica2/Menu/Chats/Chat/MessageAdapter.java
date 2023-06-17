@@ -1,6 +1,7 @@
 package com.example.practica2.Menu.Chats.Chat;
 
 import android.app.Activity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -17,10 +18,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
     private List<Message_user> messages;
     private Activity activity;
     private RequestQueue requestQueue;
-    public MessageAdapter(List<Message_user> messages, Activity activity) {
+    private int own;
+    public MessageAdapter(List<Message_user> messages, Activity activity, int own) {
         this.messages = messages;
         this.activity = activity;
+        this.own = own;
     }
+
     @Override
     public MessageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(activity);
@@ -30,6 +34,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
     public void onBindViewHolder(MessageHolder holder, int position) {
         Message_user message = messages.get(position);
         holder.bind(message);
+        if (message.getId() == own) {
+            holder.setGravity(Gravity.END);
+        } else {
+            holder.setGravity(Gravity.START);
+        }
     }
     @Override
     public int getItemCount() {

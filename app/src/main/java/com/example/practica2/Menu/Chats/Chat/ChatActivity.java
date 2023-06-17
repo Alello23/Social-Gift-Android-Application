@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -40,12 +41,15 @@ import java.util.Map;
 public class ChatActivity extends AppCompatActivity {
     private ImageView backButton;
     private ImageView avatar;
+    private ImageView sendBT;
     private TextView name;
-    private SearchView searchView;
+    private EditText input;
     private int id;
+    private int ownID;
     private RecyclerView list;
     private RequestQueue requestQueue;
     private  MessageAdapter adapter;
+    private List<Message_user> messageList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,14 +59,16 @@ public class ChatActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(ChatActivity.this);
         id = getIntent().getIntExtra("User_ID", -1);
+        ownID = getIntent().getIntExtra("User_own_id", -1);
+
+        sendBT = findViewById(R.id.CH_send_bt);
 
         name = findViewById(R.id.CH_nameText);
         avatar = findViewById(R.id.CH_avatarImage);
 
         backButton = findViewById(R.id.CH_back_button);
         list = findViewById(R.id.CH_inputMessege);
-        SearchView searchView = findViewById(R.id.CH_messageEditText);
-        searchView.setIconifiedByDefault(false);
+        input = findViewById(R.id.CH_messageEditText);
 
         list.setLayoutManager(new LinearLayoutManager(ChatActivity.this));
 
@@ -75,87 +81,19 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        searchView.setOnClickListener(new View.OnClickListener() {
+        sendBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchView.onActionViewExpanded();
+                // Acción a realizar cuando se presione el botón "Enviar"
+                String mensaje = input.getText().toString();
+                input.setText("");
+                sendMessage(mensaje);
             }
         });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Acciones a realizar cuando se envía la búsqueda
-
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
 
         updateUI();
         updateMessage();
-        conectSocket();
-    }
-    private void conectSocket() {
-
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Obtener los valores de las propiedades del usuario
-                        try {
-                            name.setText(response.getString("name"));
-                            try {
-                                Picasso.get().load(response.getString("image")).transform(new CircleImage()).into(avatar);
-                            }catch (Exception e){
-                                Log.e("error", "Usuario sin imagen: " + response.getString("name"));
-                                avatar.setImageResource(R.drawable.default_avatar);
-                            }
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Manejar el error de la solicitud
-                        if (error.networkResponse != null) {
-                            if(error.networkResponse.statusCode == 204) {
-                                Toast.makeText(getApplicationContext(), R.string.Error_204, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 400) {
-                                Toast.makeText(getApplicationContext(), R.string.Error_400, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 401) {
-                                Toast.makeText(getApplicationContext(), R.string.Error_401, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 406) {
-                                Toast.makeText(getApplicationContext(), R.string.Error_406, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 502) {
-                                Toast.makeText(getApplicationContext(), R.string.Error_502, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(getApplicationContext(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
-                return headers;
-            }
-
-        };
-        requestQueue.add(jsonObjectRequest);
-
     }
     private void updateUI() {
 
@@ -209,7 +147,6 @@ public class ChatActivity extends AppCompatActivity {
                 headers.put("Authorization", "Bearer " + getFromSharedPrefs());
                 return headers;
             }
-
         };
         requestQueue.add(jsonObjectRequest);
 
@@ -224,7 +161,7 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            List<Message_user> messageList = new ArrayList<>();
+                            messageList = new ArrayList<>();
                             // Iterar sobre los elementos del arreglo JSON
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject userObject = response.getJSONObject(i);
@@ -237,7 +174,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                 messageList.add(new Message_user(id, content, userIdSend, userIdReceived, timeStampString));
                             }
-                            adapter = new MessageAdapter(messageList, ChatActivity.this);
+                            adapter = new MessageAdapter(messageList, ChatActivity.this,ownID);
                             list.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -284,69 +221,58 @@ public class ChatActivity extends AppCompatActivity {
         return valor;
     }
 
-//    private void performSearch(String query){
-//        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/search/?s=" + query;
-//
-//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-//                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-//
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        try {
-//                            List<User> userList = new ArrayList<>();
-//                            // Iterar sobre los elementos del arreglo JSON
-//                            for (int i = 0; i < response.length(); i++) {
-//                                JSONObject userObject = response.getJSONObject(i);
-//                                // Obtener los valores de las propiedades del usuario
-//                                int id = userObject.getInt("id");
-//                                String name = userObject.getString("name");
-//                                String lastName = userObject.getString("last_name");
-//                                String email = userObject.getString("email");
-//                                String image = userObject.getString("image");
-//
-//                                userList.add(new User(id,name,lastName,email,image));
-//                            }
-//                            adapter = new AllUserAdapter(userList, NewFriendActivity.this, requestQueue);
-//                            list.setAdapter(adapter);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        // Manejar el error de la solicitud
-//                        if (error.networkResponse != null) {
-//                            if(error.networkResponse.statusCode == 400) {
-//                                Toast.makeText(getApplicationContext(), R.string.Error_400, Toast.LENGTH_SHORT).show();
-//                            } else if(error.networkResponse.statusCode == 401) {
-//                                Toast.makeText(getApplicationContext(), R.string.Error_401, Toast.LENGTH_SHORT).show();
-//                            } else if(error.networkResponse.statusCode == 406) {
-//                                Toast.makeText(getApplicationContext(), R.string.Error_406, Toast.LENGTH_SHORT).show();
-//                            }else if(error.networkResponse.statusCode == 500) {
-//                                Toast.makeText(getApplicationContext(), R.string.Error_500, Toast.LENGTH_SHORT).show();
-//                            }else if(error.networkResponse.statusCode == 502) {
-//                                Toast.makeText(getApplicationContext(), R.string.Error_502, Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                Toast.makeText(getApplicationContext(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
-//                            }
-//                        } else {
-//                            Toast.makeText(getApplicationContext(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                }) {
-//            @Override
-//            public Map<String, String> getHeaders() {
-//                Map<String, String> headers = new HashMap<>();
-//                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
-//                return headers;
-//            }
-//
-//        };
-//        requestQueue.add(jsonArrayRequest);
-//    }
+
+    private void sendMessage(String query){
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages";
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("content", query);
+            jsonParams.put("user_id_send", ownID);
+            jsonParams.put("user_id_recived", id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, jsonParams, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        messageList.add(new Message_user(query,ownID,id));
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Manejar el error de la solicitud
+                        if (error.networkResponse != null) {
+                            if(error.networkResponse.statusCode == 400) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_400, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 401) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_401, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 406) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_406, Toast.LENGTH_SHORT).show();
+                            }else if(error.networkResponse.statusCode == 500) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_500, Toast.LENGTH_SHORT).show();
+                            }else if(error.networkResponse.statusCode == 502) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_502, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
 
 
 }

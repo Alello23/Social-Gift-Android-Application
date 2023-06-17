@@ -77,6 +77,7 @@ public class AllUserHolder extends RecyclerView.ViewHolder {
                                 JSONObject payload = response.getJSONObject("payload");
                                 String message = payload.getString("message");
                                 Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+                                sendRequest.setText(R.string.sent);
                             } else {
                                 Toast.makeText(activity, R.string.Error_Default, Toast.LENGTH_SHORT).show();
                             }
@@ -98,6 +99,7 @@ public class AllUserHolder extends RecyclerView.ViewHolder {
                             } else if (error.networkResponse.statusCode == 406) {
                                 Toast.makeText(activity, R.string.Error_406, Toast.LENGTH_SHORT).show();
                             } else if (error.networkResponse.statusCode == 409) {
+                                sendRequest.setText(R.string.sent);
                                 Toast.makeText(activity, R.string.Error_409, Toast.LENGTH_SHORT).show();
                             } else if (error.networkResponse.statusCode == 410) {
                                 Toast.makeText(activity, R.string.Error_410, Toast.LENGTH_SHORT).show();

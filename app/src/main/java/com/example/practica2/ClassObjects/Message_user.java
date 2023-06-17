@@ -19,6 +19,11 @@ public class Message_user {
         this.userIdReceived = userIdReceived;
         this.timeStamp = timeStamp;
     }
+    public Message_user(String content, int userIdSend, int userIdReceived) {
+        this.content = content;
+        this.userIdSend = userIdSend;
+        this.userIdReceived = userIdReceived;
+    }
 
     // Getters and setters
     public int getId() {
@@ -55,12 +60,15 @@ public class Message_user {
 
     public String getTimeStamp() {
         try {
-            return dateFormat.parse(timeStamp).toString();
+            Date date = dateFormat.parse(timeStamp);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            return timeFormat.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
     }
+
 
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;

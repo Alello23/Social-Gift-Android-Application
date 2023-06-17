@@ -5,11 +5,14 @@ import static android.content.Context.MODE_PRIVATE;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +49,15 @@ public class MessageHolder extends RecyclerView.ViewHolder {
     public void bind(Message_user message) {
         this.message = message;
         content.setText(message.getContent());
+    }
+
+    public void setGravity(int gravity) {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) content.getLayoutParams();
+        params.addRule(RelativeLayout.ALIGN_PARENT_START, 0);
+        params.addRule(RelativeLayout.ALIGN_PARENT_END, 0);
+        params.addRule(gravity);
+        content.setLayoutParams(params);
+
     }
 }
 

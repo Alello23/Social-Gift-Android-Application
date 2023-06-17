@@ -73,6 +73,7 @@
     <string name="Request_succes">Sent successfully</string>
     <string name="Accepted">Accepted successfully</string>
     <string name="Rejected">Rejected successfully</string>
+    <string name="sent">SENT</string>
 
     <!-- Chat -->
     <string name="hint_chat">Type Message</string>

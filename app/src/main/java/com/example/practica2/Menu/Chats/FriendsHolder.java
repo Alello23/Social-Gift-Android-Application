@@ -90,8 +90,8 @@ public class FriendsHolder extends RecyclerView.ViewHolder implements View.OnCli
                                 messageList.add(new Message_user(id, content, userIdSend, userIdReceived, timeStampString));
                             }
                             if(!messageList.isEmpty()){
-                                lastMessage.setText(messageList.get(0).getContent());
-                                lastMessage_time.setText(messageList.get(0).getTimeStamp());
+                                lastMessage.setText(messageList.get(messageList.size() - 1).getContent());
+                                lastMessage_time.setText(messageList.get(messageList.size() - 1).getTimeStamp());
                             }else {
                                 lastMessage.setText(R.string.empty_chat);
                                 lastMessage_time.setText("");
@@ -143,12 +143,18 @@ public class FriendsHolder extends RecyclerView.ViewHolder implements View.OnCli
         Intent intent = new Intent(activity, ChatActivity.class);
         user.getId();
         intent.putExtra("User_ID", user.getId());
+        intent.putExtra("User_own_id", Integer.parseInt(getUserID()));
         intent.putExtra("token", getFromSharedPrefs());
         activity.startActivity(intent);
     }
     private String getFromSharedPrefs() {
         SharedPreferences sharedPrefs = activity.getPreferences(MODE_PRIVATE);
         String valor = sharedPrefs.getString("token", "default");
+        return valor;
+    }
+    public String getUserID() {
+        SharedPreferences sharedPrefs = activity.getPreferences(MODE_PRIVATE);
+        String valor = sharedPrefs.getString("user_id", "default");
         return valor;
     }
 }

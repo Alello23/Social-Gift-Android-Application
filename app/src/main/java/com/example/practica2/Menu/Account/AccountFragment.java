@@ -53,8 +53,9 @@ public class AccountFragment extends Fragment {
     private static final int REQUEST_CODE_GALLERY = 2;
 
 
-    public AccountFragment(RequestQueue requestQueue) {
+    public AccountFragment(RequestQueue requestQueue, String userID) {
         this.requestQueue = requestQueue;
+        this.userID = userID;
     }
 
     @Override
@@ -109,9 +110,7 @@ public class AccountFragment extends Fragment {
                 getActivity().finish();
             }
         });
-
-        decodeJWT();
-
+        getUserDetails();
         return view;
     }
     private void selectImage() {
@@ -214,22 +213,6 @@ public class AccountFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-
-    private void decodeJWT (){
-        // Decode JWT to get user id
-        String[] splitToken = getFromSharedPrefs().split("\\.");
-        byte[] decodedBytes = Base64.decode(splitToken[1], Base64.URL_SAFE);
-        String jsonBody = new String(decodedBytes, StandardCharsets.UTF_8);
-
-        try {
-            JSONObject jsonObject = new JSONObject(jsonBody);
-            userID = jsonObject.getString("id");
-            getUserDetails();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 

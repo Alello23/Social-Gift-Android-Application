@@ -29,16 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/WIS_avatarImage_FC" />
 
-    <ImageView
-        android:id="@+id/FC_add_wish_list_bt"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="58dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/add_list" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/WIS_input_gift"
         android:layout_width="match_parent"
@@ -48,6 +38,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/WIS_avatarImage_FC"
         app:layout_constraintVertical_bias="0.0" />
+    <ImageView
+        android:id="@+id/WIS_add_wish_list_bt"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/add_list" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

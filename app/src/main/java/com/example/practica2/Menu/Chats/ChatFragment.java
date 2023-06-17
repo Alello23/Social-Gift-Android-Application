@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.practica2.ClassObjects.CircleImage;
 import com.example.practica2.ClassObjects.User;
 import com.example.practica2.Menu.Chats.AddFriend.NewFriendActivity;
 import com.example.practica2.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +40,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ChatFragment extends Fragment{
+    private final String userID;
     private ImageView add_friend;
+    private ImageView avatar;
     private SearchView searchView;
     private RecyclerView list;
     private RequestQueue requestQueue;
@@ -46,7 +52,8 @@ public class ChatFragment extends Fragment{
     private FriendsAdapter friendsAdapter;
 
 
-    public ChatFragment(RequestQueue requestQueue) {
+    public ChatFragment(RequestQueue requestQueue, String userID) {
+        this.userID = userID;
         this.requestQueue = requestQueue;
     }
 
@@ -55,6 +62,7 @@ public class ChatFragment extends Fragment{
         // Infla el diseño del fragmento en el contenedor
         View view = inflater.inflate(R.layout.fragment_friends_chat, container, false);
 
+        avatar = view.findViewById(R.id.FSC_avatarImage_FC);
         add_friend = view.findViewById(R.id.FSC_add_friend_button);
         searchView = view.findViewById(R.id.FSC_searchView_FC);
         friendsRequest_bt = view.findViewById(R.id.FSC_request_FC);
@@ -62,6 +70,8 @@ public class ChatFragment extends Fragment{
 
         list = view.findViewById(R.id.FSC_chats_container_FC);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        updateProfileAvatar();
         add_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +116,38 @@ public class ChatFragment extends Fragment{
     }
     private void performSearch(String query){
 
+    }
+    private void updateProfileAvatar() {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + userID;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Picasso.get().load(response.getString("image")).transform(new CircleImage()).into(avatar);
+                        }catch (Exception e){
+                            Log.e("error", "Usuario sin imagen" );
+                            avatar.setImageResource(R.drawable.default_avatar);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
+                return headers;
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
     }
     private void updateUIMyFriends() {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/friends";
