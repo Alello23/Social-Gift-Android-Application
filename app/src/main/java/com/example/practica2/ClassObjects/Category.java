@@ -15,6 +15,10 @@ public class Category {
         return photo;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Category(int id, String name, String description, String photo, int categoryParentId) {
         this.id = id;
         this.name = name;

@@ -5,13 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.practica2.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class WishListFragment extends Fragment {
     private ImageView addWishListButton;
@@ -41,6 +51,53 @@ public class WishListFragment extends Fragment {
             }
         });
 
+        // 获取所有心愿清单
+        getAllWishlists();
+
         return view;
+    }
+
+    private void getAllWishlists() {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject wishlistObject = response.getJSONObject(i);
+                                int id = wishlistObject.getInt("id");
+                                String name = wishlistObject.getString("name");
+                                String description = wishlistObject.getString("description");
+
+
+                                View wishlistItemView = LayoutInflater.from(getContext()).inflate(R.layout.element_wishlist, null);
+
+                                ImageView avatarImageView = wishlistItemView.findViewById(R.id.WI_avatarImage_FC);
+                                TextView nameTextView = wishlistItemView.findViewById(R.id.WI_edit_button);
+                                TextView descriptionTextView = wishlistItemView.findViewById(R.id.WI_description);
+
+                                // avatarImageView.setImageDrawable(...); // 设置头像图像
+                                nameTextView.setText(name);
+                                descriptionTextView.setText(description);
+
+                                // parentLayout.addView(wishlistItemView);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), "Error getting wishlists", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+
+        requestQueue.add(jsonArrayRequest);
     }
 }
