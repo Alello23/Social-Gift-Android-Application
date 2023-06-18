@@ -57,6 +57,7 @@ public class CategoryHolder extends RecyclerView.ViewHolder  implements View.OnC
         Intent intent = new Intent(activity, CategoryActivity.class);
         intent.putExtra("Category_ID", category.getId());
         intent.putExtra("token", getFromSharedPrefs());
+        intent.putExtra("user_id", getFromSharedPrefsUser());
         activity.startActivity(intent);
     }
     public void bind(Category category, RequestQueue requestQueue) {
@@ -72,6 +73,11 @@ public class CategoryHolder extends RecyclerView.ViewHolder  implements View.OnC
     private String getFromSharedPrefs() {
         SharedPreferences sharedPrefs = activity.getPreferences(MODE_PRIVATE);
         String valor = sharedPrefs.getString("token", "default");
+        return valor;
+    }
+    private String getFromSharedPrefsUser() {
+        SharedPreferences sharedPrefs = activity.getPreferences(MODE_PRIVATE);
+        String valor = sharedPrefs.getString("user_id", "default");
         return valor;
     }
 }

@@ -49,6 +49,7 @@ public class CategoryActivity extends AppCompatActivity {
         saveToSharedPrefs(getIntent().getStringExtra("token"));
         id_category = getIntent().getIntExtra("Category_ID", -1);
         requestQueue = Volley.newRequestQueue(CategoryActivity.this);
+        saveID(getIntent().getStringExtra("user_id"));
 
         searchView = findViewById(R.id.AF_searchView);
         backButton = findViewById(R.id.AF_back_button);
@@ -157,6 +158,12 @@ public class CategoryActivity extends AppCompatActivity {
 
         };
         requestQueue.add(jsonArrayRequest);
+    }
+    public void saveID(String id) {
+        SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = sharedPrefs.edit();
+        prefsEditor.putString("user_id", id);
+        prefsEditor.apply();
     }
     public void saveToSharedPrefs(String token) {
         SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);

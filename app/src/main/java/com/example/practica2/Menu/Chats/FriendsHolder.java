@@ -103,15 +103,16 @@ public class FriendsHolder extends RecyclerView.ViewHolder implements View.OnCli
 
                                 messageList.add(new Message_user(id, content, userIdSend, userIdReceived, timeStampString));
                             }
-                            if (!lastMessage.getText().equals(messageList.get(messageList.size() - 1).getContent())){
-                                if(!messageList.isEmpty()){
+                            if (!messageList.isEmpty()) {
+                                if (!lastMessage.getText().equals(messageList.get(messageList.size() - 1).getContent())) {
                                     lastMessage.setText(messageList.get(messageList.size() - 1).getContent());
                                     lastMessage_time.setText(messageList.get(messageList.size() - 1).getTimeStamp());
-                                }else {
-                                    lastMessage.setText(R.string.empty_chat);
-                                    lastMessage_time.setText("");
                                 }
+                            } else {
+                                lastMessage.setText(R.string.empty_chat);
+                                lastMessage_time.setText("");
                             }
+
 
 
                         } catch (JSONException e) {
