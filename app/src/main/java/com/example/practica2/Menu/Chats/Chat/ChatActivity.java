@@ -1,6 +1,9 @@
 package com.example.practica2.Menu.Chats.Chat;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,8 +11,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +26,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.practica2.ClassObjects.CircleImage;
+import com.example.practica2.ClassObjects.Gift;
 import com.example.practica2.ClassObjects.Message_user;
-import com.example.practica2.ClassObjects.User;
-import com.example.practica2.Menu.Chats.AddFriend.AllUserAdapter;
-import com.example.practica2.Menu.Chats.AddFriend.NewFriendActivity;
+import com.example.practica2.ClassObjects.WishList;
+import com.example.practica2.Menu.WishList.GiftList.GiftListActivity;
 import com.example.practica2.R;
 import com.squareup.picasso.Picasso;
 
@@ -48,15 +49,20 @@ public class ChatActivity extends AppCompatActivity {
     private ImageView backButton;
     private ImageView avatar;
     private ImageView sendBT;
+    private ImageView gift;
     private TextView name;
     private TextView description;
     private EditText input;
-    private int id;
+    private int id_other;
     private int ownID;
     private RecyclerView list;
     private RequestQueue requestQueue;
     private  MessageAdapter adapter;
     private List<Message_user> messageList;
+    private List<WishList> wishLists;
+    public ChatActivity() {
+        // Constructor vacío requerido
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +71,7 @@ public class ChatActivity extends AppCompatActivity {
         saveToSharedPrefs(getIntent().getStringExtra("token"));
 
         requestQueue = Volley.newRequestQueue(ChatActivity.this);
-        id = getIntent().getIntExtra("User_ID", -1);
+        id_other = getIntent().getIntExtra("User_ID", -1);
         ownID = getIntent().getIntExtra("User_own_id", -1);
 
         sendBT = findViewById(R.id.CH_send_bt);
@@ -73,13 +79,19 @@ public class ChatActivity extends AppCompatActivity {
         name = findViewById(R.id.CH_nameText);
         description = findViewById(R.id.CH_subnameText);
         avatar = findViewById(R.id.CH_avatarImage);
+        gift = findViewById(R.id.CH_gift_button);
 
         backButton = findViewById(R.id.CH_back_button);
         list = findViewById(R.id.CH_inputMessege);
         input = findViewById(R.id.CH_messageEditText);
 
         list.setLayoutManager(new LinearLayoutManager(ChatActivity.this));
-
+        gift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAllWishlists();
+            }
+        });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,9 +128,84 @@ public class ChatActivity extends AppCompatActivity {
         updateUI();
         updateMessage();
     }
+    public void getAllWishlists() {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            wishLists = new ArrayList<>();
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject wishlistObject = response.getJSONObject(i);
+                                int id = wishlistObject.getInt("id");
+                                String name = wishlistObject.getString("name");
+                                String description = wishlistObject.getString("description");
+                                int userId = wishlistObject.getInt("user_id");
+                                String creationDate = wishlistObject.getString("creation_date");
+                                String endDate = wishlistObject.getString("end_date");
+
+                                List<Gift> gifts = new ArrayList<>();
+                                if (userId == id_other) {
+                                    WishList wishList = new WishList(id, name, description, userId, gifts, creationDate, endDate);
+                                    wishLists.add(wishList);
+                                }
+                            }
+                            showWishlistDropdown();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(ChatActivity.this, "Error getting wishlists", Toast.LENGTH_SHORT).show();
+                    }
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
+                return headers;
+            }};
+
+        requestQueue.add(jsonArrayRequest);
+    }
+    private void showWishlistDropdown() {
+        // Crear un arreglo de cadenas para almacenar los nombres de las listas de deseos
+        String[] wishlistNames = new String[wishLists.size()];
+
+        // Obtener los nombres de las listas de deseos y agregarlos al arreglo
+        for (int i = 0; i < wishLists.size(); i++) {
+            wishlistNames[i] = wishLists.get(i).getName();
+        }
+
+        // Mostrar el desplegable utilizando un diálogo de lista
+        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+        builder.setTitle("Select Wishlist");
+        builder.setItems(wishlistNames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Acción a realizar cuando se selecciona una lista de deseos
+                WishList selectedWishlist = wishLists.get(which);
+                Intent intent = new Intent(ChatActivity.this, GiftListActivity.class);
+                intent.putExtra("WishList_ID", selectedWishlist.getId());
+                intent.putExtra("token", getFromSharedPrefs());
+                intent.putExtra("my", 1);
+                startActivity(intent);
+            }
+        });
+        builder.show();
+    }
     private void updateUI() {
 
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + id_other;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -175,7 +262,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void updateMessage() {
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id_other;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -234,7 +321,7 @@ public class ChatActivity extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
     private void updateMessage_only() {
-        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id_other;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -319,7 +406,7 @@ public class ChatActivity extends AppCompatActivity {
         try {
             jsonParams.put("content", query);
             jsonParams.put("user_id_send", ownID);
-            jsonParams.put("user_id_recived", id);
+            jsonParams.put("user_id_recived", id_other);
         } catch (JSONException e) {
             e.printStackTrace();
         }

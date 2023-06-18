@@ -42,6 +42,13 @@
 
     <string name="Title_wishlist">Wishlists</string>
 
+    <!-- gift -->
+
+    <string name="remove">Remove</string>
+    <string name="Unreserve">UN-reserve</string>
+    <string name="reserve">Reserve</string>
+    <string name="reserved">Reserved</string>
+
     <!-- New WishList -->
 
     <string name="Title_new_wishlist">New Wishlist</string>

@@ -27,13 +27,13 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftViewHolder> {
     @Override
     public GiftViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(activity);
-        return new GiftViewHolder(layoutInflater, parent, activity);
+        return new GiftViewHolder(layoutInflater, parent, activity, requestQueue, giftList);
     }
 
     @Override
     public void onBindViewHolder(@NonNull GiftViewHolder holder, int position) {
         Gift gift = giftList.get(position);
-        holder.bind(gift);
+        holder.bind(gift,this);
     }
 
     @Override

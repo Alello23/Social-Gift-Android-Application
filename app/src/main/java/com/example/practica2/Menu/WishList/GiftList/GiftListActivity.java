@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -57,7 +58,7 @@ public class GiftListActivity extends AppCompatActivity {
 
         backButton = findViewById(R.id.WIT_button_back);
         list = findViewById(R.id.WIT_input_gift);
-        list.setLayoutManager(new GridLayoutManager(this, 2));
+        list.setLayoutManager(new LinearLayoutManager(this));
 
         title = findViewById(R.id.WIT_text_WishList);
 
@@ -76,24 +77,27 @@ public class GiftListActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(JSONObject response) {
+
                 try {
-                    JSONObject wishlistObject = response.getJSONObject("wishlist");
-                    int id = wishlistObject.getInt("id");
-                    String name = wishlistObject.getString("name");
-                    String description = wishlistObject.getString("description");
-                    int userId = wishlistObject.getInt("user_id");
-                    String creationDate = wishlistObject.getString("creation_date");
-                    String endDate = wishlistObject.getString("end_date");
+                    int id = response.getInt("id");
+                    String name = response.getString("name");
+                    String description = response.getString("description");
+                    int userId = response.getInt("user_id");
+                    String creationDate = response.getString("creation_date");
+                    String endDate = response.getString("end_date");
 
                     List<Gift> gifts = new ArrayList<>();
-                    JSONArray giftsArray = wishlistObject.getJSONArray("gifts");
+                    JSONArray giftsArray = response.getJSONArray("gifts");
                     for (int i = 0; i < giftsArray.length(); i++) {
                         JSONObject giftObject = giftsArray.getJSONObject(i);
                         int giftId = giftObject.getInt("id");
                         int wishlistId = giftObject.getInt("wishlist_id");
                         String productUrl = giftObject.getString("product_url");
-                        int priority = giftObject.getInt("priority");
-                        boolean isBooked = giftObject.getBoolean("booked");
+                        int priority = 0;
+                        boolean isBooked = false;
+                        if (giftObject.getInt("booked") == 1){
+                            isBooked = true;
+                        }
 
                         Gift gift = new Gift(giftId, wishlistId, productUrl, priority, isBooked);
                         gifts.add(gift);

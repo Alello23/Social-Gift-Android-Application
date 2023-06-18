@@ -1,6 +1,8 @@
 package com.example.practica2.Menu.Home.Product;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -89,19 +92,12 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
-//        addWishlistProduct.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Acción a realizar cuando se presione el botón "Enviar"
-//                String mensaje = input.getText().toString();
-//                input.setText("");
-//                sendMessage(mensaje);
-//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//
-//                // Oculta el teclado virtual
-//                imm.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
-//            }
-//        });
+        addWishlistProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAllWishlists();
+            }
+        });
 
         updateUI();
     }
@@ -130,7 +126,7 @@ public class ProductActivity extends AppCompatActivity {
                                 categoryIds.add(categoryId);
                             }
 
-                            Product product = new Product(id, name, description, link, photo, price, isActive, categoryIds);
+                            product = new Product(id, name, description, link, photo, price, isActive, categoryIds);
                             loadInfo(product);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -187,6 +183,7 @@ public class ProductActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
+                            wishLists = new ArrayList<>();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject wishlistObject = response.getJSONObject(i);
                                 int id = wishlistObject.getInt("id");
@@ -202,6 +199,7 @@ public class ProductActivity extends AppCompatActivity {
                                     wishLists.add(wishList);
                                 }
                             }
+                            showWishlistDropdown();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -225,6 +223,74 @@ public class ProductActivity extends AppCompatActivity {
 
         requestQueue.add(jsonArrayRequest);
     }
+    private void showWishlistDropdown() {
+        // Crear un arreglo de cadenas para almacenar los nombres de las listas de deseos
+        String[] wishlistNames = new String[wishLists.size()];
+
+        // Obtener los nombres de las listas de deseos y agregarlos al arreglo
+        for (int i = 0; i < wishLists.size(); i++) {
+            wishlistNames[i] = wishLists.get(i).getName();
+        }
+
+        // Mostrar el desplegable utilizando un diálogo de lista
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProductActivity.this);
+        builder.setTitle("Select Wishlist");
+        builder.setItems(wishlistNames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Acción a realizar cuando se selecciona una lista de deseos
+                WishList selectedWishlist = wishLists.get(which);
+                createGift(selectedWishlist.getId());
+
+            }
+        });
+        builder.show();
+    }
+    private void createGift (int wishList_ID){
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/gifts";
+
+        // Crear el objeto JSON que se enviará en el cuerpo de la solicitud PUT
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("wishlist_id", wishList_ID);
+            requestBody.put("product_url", "https://balandrau.salle.url.edu/i3/mercadoexpress/api/v1/products/" + product.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+// Crear la solicitud JsonObjectRequest con el método PUT
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+               Toast.makeText(ProductActivity.this,"Added!",Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                try {
+                    String errorResponse = new String(error.networkResponse.data, "UTF-8");
+                    Log.e("w", errorResponse);
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+                // Manejar el error de la solicitud
+                Toast.makeText(ProductActivity.this, "Error updating wishlist", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                // Agregar los encabezados de autorización a la solicitud
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
+                return headers;
+            }
+        };
+
+// Agregar la solicitud a la cola de solicitudes
+        requestQueue.add(jsonObjectRequest);
+
+    }
+
     private void loadInfo (Product product){
         name.setText(product.getName());
         description.setText(product.getDescription());

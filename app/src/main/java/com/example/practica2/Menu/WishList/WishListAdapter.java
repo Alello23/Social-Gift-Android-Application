@@ -22,7 +22,6 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListHolder> {
         this.requestQueue = requestQueue;
         this.wishListFragment = wishListFragment;
     }
-
     @Override
     public WishListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(activity);

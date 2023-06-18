@@ -3,31 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/GI_avatarImage_2"
         android:layout_width="143dp"
         android:layout_height="143dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rounded_image"
         android:contentDescription="Avatar"
         android:src="@drawable/test_icon"
-        tools:layout_editor_absoluteX="12dp"
-        tools:layout_editor_absoluteY="17dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/GI_title_WishList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_vertical"
         android:layout_marginStart="19dp"
+        android:background="@android:color/transparent"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="normal"
-        android:background="@android:color/transparent"
-        android:layout_gravity="center_vertical"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         app:layout_constraintStart_toEndOf="@+id/GI_avatarImage_2"
         app:layout_constraintTop_toTopOf="@+id/GI_avatarImage_2" />
 
@@ -48,8 +50,11 @@
         android:id="@+id/GI_Price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/rounded_corners"
+        android:fontFamily="@font/montserrat_semibold"
         android:text="TextView"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/GI_title_WishList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/GI_title_WishList" />
@@ -62,6 +67,23 @@
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="@+id/GI_avatarImage_2"
         app:layout_constraintStart_toEndOf="@+id/GI_avatarImage_2" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/reserved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/stroke_red"
+        android:fontFamily="@font/montserrat_semibold"
+        android:rotation="30"
+        android:text="@string/reserved"
+        android:textColor="@color/red"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/GI_avatarImage_2"
+        app:layout_constraintStart_toStartOf="@+id/GI_avatarImage_2"
+        app:layout_constraintTop_toTopOf="@+id/GI_avatarImage_2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

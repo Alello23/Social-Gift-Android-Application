@@ -1,6 +1,8 @@
 package com.example.practica2.Menu.WishList;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +36,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class WishListHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
@@ -64,15 +73,54 @@ public class WishListHolder extends RecyclerView.ViewHolder  implements View.OnC
         this.requestQueue = requestQueue;
         title.setText(wishList.getName());
         description.setText(wishList.getDescription());
-        date.setText(wishList.getEndDate());
-        date.setClickable(false);
+        String endDate = wishList.getEndDate();
 
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+            Date date = inputFormat.parse(endDate);
+
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            String formattedDate = outputFormat.format(date);
+
+            this.date.setText(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         date.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                // Obtener la fecha actual
+                // Obtener la fecha y hora actual
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
 
+                // Crear el DatePickerDialog
+                DatePickerDialog datePickerDialog = new DatePickerDialog(itemView.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                // Obtener la fecha seleccionada
+                                Calendar selectedCalendar = Calendar.getInstance();
+                                selectedCalendar.set(year, month, dayOfMonth);
+
+                                // Formatear la fecha seleccionada
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                String formattedDate = dateFormat.format(selectedCalendar.getTime());
+
+                                // Mostrar el TimePickerDialog para seleccionar la hora
+                                showTimePicker(selectedCalendar, formattedDate);
+                            }
+                        }, year, month, day);
+
+                // Mostrar el DatePickerDialog
+                datePickerDialog.show();
             }
         });
+        date.setClickable(false);
 
         save.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -110,7 +158,35 @@ public class WishListHolder extends RecyclerView.ViewHolder  implements View.OnC
             }
         });
     }
+    private void showTimePicker(final Calendar selectedCalendar, final String formattedDate) {
+        // Obtener la hora y minuto actuales
+        int hour = selectedCalendar.get(Calendar.HOUR_OF_DAY);
+        int minute = selectedCalendar.get(Calendar.MINUTE);
 
+        // Crear el TimePickerDialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(itemView.getContext(),
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // Actualizar el calendario con la hora seleccionada
+                        selectedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        selectedCalendar.set(Calendar.MINUTE, minute);
+
+                        // Formatear la fecha y hora seleccionadas
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                        String formattedTime = timeFormat.format(selectedCalendar.getTime());
+
+                        // Combinar la fecha y hora formateadas
+                        String dateTime = formattedDate + " " + formattedTime;
+
+                        // Actualizar el TextView de la fecha y hora con la selección
+                        date.setText(dateTime);
+                    }
+                }, hour, minute, false);
+
+        // Mostrar el TimePickerDialog
+        timePickerDialog.show();
+    }
     private void deleteWishlist() {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + wishList.getId();
 
@@ -151,8 +227,22 @@ public class WishListHolder extends RecyclerView.ViewHolder  implements View.OnC
         try {
             jsonParams.put("name", title.getText().toString());
             jsonParams.put("description", description.getText().toString());
+            // Obtener la fecha formateada del TextView
+            String formattedDate = date.getText().toString();
+
+            // Convertir la fecha formateada al formato original
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            Date date = outputFormat.parse(formattedDate);
+
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+            String originalDate = inputFormat.format(date);
+
+            // Agregar la fecha original al JSONObject
+            jsonParams.put("endDate", originalDate);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
 
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + wishList.getId();
