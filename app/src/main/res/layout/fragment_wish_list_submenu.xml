@@ -1,35 +1,25 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp
-"
-    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/UO_configurationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="8dp"
+        android:text="Edit" />
 
-        <TextView
-            android:id="@+id/UO_configurationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Edit" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000000" />
+    <TextView
+        android:id="@+id/UO_addFriendTextView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Delete" />
 
-        <TextView
-            android:id="@+id/UO_addFriendTextView"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Delete" />
-
-
-
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

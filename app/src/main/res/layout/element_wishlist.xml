@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/WI_view"
         android:layout_width="match_parent"
         android:layout_height="177dp"
         android:background="@drawable/rounded_corners"
@@ -54,7 +54,7 @@
         android:text="TextView"
         android:textColor="@android:color/white"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintBottom_toBottomOf="@+id/WI_view"
         app:layout_constraintEnd_toStartOf="@+id/WI_more_option"
         app:layout_constraintStart_toStartOf="@+id/WI_title"
         app:layout_constraintTop_toBottomOf="@+id/WI_title" />

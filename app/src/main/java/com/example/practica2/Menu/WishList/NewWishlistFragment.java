@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -43,38 +42,35 @@ import java.util.Map;
 public class NewWishlistFragment extends Fragment {
     private EditText editTextTitle;
     private EditText editTextDescription;
-    private ImageView back_bt;
     private Button openDatePickerButton;
     private Button openTimePickerButton;
     private Button createWishlistButton;
     private RequestQueue requestQueue;
     private WishListFragment wishListFragment;
+    private WishList wishList; // 用于编辑模式
 
     public NewWishlistFragment(WishListFragment wishListFragment, RequestQueue requestQueue) {
         this.wishListFragment = wishListFragment;
         this.requestQueue = requestQueue;
-        // Constructor público requerido vacío
+        this.wishList = null; // 默认为创建模式
+    }
+
+    public NewWishlistFragment(WishListFragment wishListFragment, RequestQueue requestQueue, WishList wishList) {
+        this.wishListFragment = wishListFragment;
+        this.requestQueue = requestQueue;
+        this.wishList = wishList; // 编辑模式
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_wishlist, container, false);
 
-        editTextTitle = view.findViewById(R.id.NW_editText_Title); // Replace with actual ID
-        editTextDescription = view.findViewById(R.id.NW_editText_Description); // Replace with actual ID
-        back_bt = view.findViewById(R.id.NW_button_back);
-        back_bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.ME_fragmentContainerView, wishListFragment);
-                fragmentTransaction.commit();
-            }
-        });
-
+        editTextTitle = view.findViewById(R.id.NW_editText_Title);
+        editTextDescription = view.findViewById(R.id.NW_editText_Description);
         openDatePickerButton = view.findViewById(R.id.NW_openPopupButton_date);
+        openTimePickerButton = view.findViewById(R.id.NW_openPopupButton_time);
+        createWishlistButton = view.findViewById(R.id.NW_button_CreateNewWishList);
+
         openDatePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +78,6 @@ public class NewWishlistFragment extends Fragment {
             }
         });
 
-        openTimePickerButton = view.findViewById(R.id.NW_openPopupButton_time);
         openTimePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,13 +85,22 @@ public class NewWishlistFragment extends Fragment {
             }
         });
 
-        createWishlistButton = view.findViewById(R.id.NW_button_CreateNewWishList); // Replace with actual ID
         createWishlistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createWishlist();
+                if (wishList == null) {
+                    createWishlist();
+                } else {
+                    updateWishlist();
+                }
             }
         });
+
+        // 编辑模式下，填充现有的愿望列表信息
+        if (wishList != null) {
+            editTextTitle.setText(wishList.getName());
+            editTextDescription.setText(wishList.getDescription());
+        }
 
         return view;
     }
@@ -139,7 +143,6 @@ public class NewWishlistFragment extends Fragment {
         String description = editTextDescription.getText().toString();
         String date = openDatePickerButton.getText().toString();
         String time = openTimePickerButton.getText().toString();
-
         String dateTime = date + "T" + time + "Z";
 
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
@@ -153,64 +156,92 @@ public class NewWishlistFragment extends Fragment {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest
-                (Request.Method.POST, url, jsonBody, new Response.Listener<JSONObject>() {
-
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.ME_fragmentContainerView, wishListFragment);
-                        fragmentTransaction.commit();
+                        Toast.makeText(requireContext(), "Wishlist created", Toast.LENGTH_SHORT).show();
+                        wishListFragment.refreshWishlists();
+                        requireActivity().getSupportFragmentManager().popBackStack();
                     }
                 }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            String errorResponse = new String(error.networkResponse.data, "UTF-8");
-                            Log.e("error",errorResponse);
-                        } catch (UnsupportedEncodingException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        // Manejar el error de la solicitud
-                        if (error.networkResponse != null) {
-                            if(error.networkResponse.statusCode == 400) {
-                                Toast.makeText(getActivity(), R.string.Error_400, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 401) {
-                                Toast.makeText(getActivity(), R.string.Error_401, Toast.LENGTH_SHORT).show();
-                            }else if(error.networkResponse.statusCode == 406) {
-                                Toast.makeText(getActivity(), R.string.Error_406, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 410) {
-                                Toast.makeText(getActivity(), R.string.Error_410, Toast.LENGTH_SHORT).show();
-                            }else if(error.networkResponse.statusCode == 500) {
-                                Toast.makeText(getActivity(), R.string.Error_500, Toast.LENGTH_SHORT).show();
-                            }else if(error.networkResponse.statusCode == 502) {
-                                Toast.makeText(getActivity(), R.string.Error_502, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getActivity(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(getActivity(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                }) {
             @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + getFromSharedPrefs(getActivity()));
-                return headers;
+            public void onErrorResponse(VolleyError error) {
+                handleError(error);
             }
-
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return getRequestHeaders();
+            }
         };
 
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(jsonObjectRequest);
     }
+
+    private void updateWishlist() {
+        String title = editTextTitle.getText().toString();
+        String description = editTextDescription.getText().toString();
+        String date = openDatePickerButton.getText().toString();
+        String time = openTimePickerButton.getText().toString();
+        String dateTime = date + "T" + time + "Z";
+
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists/" + wishList.getId();
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("name", title);
+            jsonBody.put("description", description);
+            jsonBody.put("end_date", dateTime);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, jsonBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(requireContext(), "Wishlist updated", Toast.LENGTH_SHORT).show();
+                        wishListFragment.refreshWishlists();
+                        requireActivity().getSupportFragmentManager().popBackStack();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                handleError(error);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return getRequestHeaders();
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private Map<String, String> getRequestHeaders() throws AuthFailureError {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + getFromSharedPrefs(requireActivity()));
+        return headers;
+    }
+
     private String getFromSharedPrefs(Activity activity) {
-        SharedPreferences sharedPrefs = activity.getPreferences(MODE_PRIVATE);
-        String valor = sharedPrefs.getString("token", "default");
-        return valor;
+        SharedPreferences sharedPrefs = activity.getPreferences(Context.MODE_PRIVATE);
+        return sharedPrefs.getString("token", "");
+    }
+
+    private void handleError(VolleyError error) {
+        if (error.networkResponse != null) {
+            if (error.networkResponse.statusCode == 401) {
+                Toast.makeText(requireContext(), "Unauthorized", Toast.LENGTH_SHORT).show();
+            } else if (error.networkResponse.statusCode == 400) {
+                Toast.makeText(requireContext(), "Bad Request", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Error creating/updating wishlist", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(requireContext(), "Network error", Toast.LENGTH_SHORT).show();
+        }
     }
 }

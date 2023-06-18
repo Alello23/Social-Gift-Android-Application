@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <ImageView
         android:id="@+id/WIT_avatarImage_FC"
         android:layout_width="75dp"

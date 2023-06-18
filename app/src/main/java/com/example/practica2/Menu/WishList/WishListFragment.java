@@ -117,8 +117,7 @@ public class WishListFragment extends Fragment {
 
         requestQueue.add(jsonObjectRequest);
     }
-
-        private void getAllWishlists() {
+    private void getAllWishlists() {
             String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
 
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
