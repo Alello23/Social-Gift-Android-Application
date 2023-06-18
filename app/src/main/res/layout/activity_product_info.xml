@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/PR_wishlist_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="380dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PR_back_button"
@@ -40,8 +40,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
+        android:fontFamily="sans-serif-black"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/PR_wishlist_image"
+        android:textSize="20sp"
+        android:typeface="monospace"
+        app:layout_constraintStart_toStartOf="@+id/PR_back_button"
         app:layout_constraintTop_toBottomOf="@+id/PR_wishlist_image" />
 
     <TextView
@@ -49,7 +52,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/rounded_corners"
         android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/PR_wishlist_image"
         app:layout_constraintTop_toBottomOf="@+id/PR_wishlist_image" />
 
@@ -59,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/product_description"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="@+id/PR_title"
         app:layout_constraintTop_toBottomOf="@+id/PR_title" />
 

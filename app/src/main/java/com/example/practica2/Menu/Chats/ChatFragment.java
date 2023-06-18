@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.practica2.ClassObjects.CircleImage;
+import com.example.practica2.ClassObjects.Message_user;
 import com.example.practica2.ClassObjects.User;
 import com.example.practica2.Menu.Chats.AddFriend.NewFriendActivity;
 import com.example.practica2.R;
@@ -37,6 +38,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -79,7 +81,7 @@ public class ChatFragment extends Fragment{
 
         list = view.findViewById(R.id.FSC_chats_container_FC);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        updateUIMyFriends();
         add_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,18 +119,6 @@ public class ChatFragment extends Fragment{
                 return false;
             }
         });
-
-        Timer timer = new Timer();
-
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                updateUIMyFriends();
-            }
-        };
-
-        // Programa la tarea para que se ejecute cada 10 segundos
-        timer.schedule(task, 0, 10000);
 
         updateProfileAvatar();
         return view;

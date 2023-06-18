@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class FriendsHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
@@ -66,6 +68,92 @@ public class FriendsHolder extends RecyclerView.ViewHolder implements View.OnCli
             avatarImage.setImageResource(R.drawable.default_avatar);
         }
         getLastMessege(activity, requestQueue, user.getId());
+
+        Timer timer = new Timer();
+
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                checkMessage(activity,requestQueue,user.getId());
+            }
+        };
+
+        // Programa la tarea para que se ejecute cada 10 segundos
+        timer.schedule(task, 0, 10000);
+    }
+    public void checkMessage(Activity activity, RequestQueue requestQueue, int id) {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            List<Message_user> messageList = new ArrayList<>();
+                            // Iterar sobre los elementos del arreglo JSON
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject userObject = response.getJSONObject(i);
+                                // Obtener los valores de las propiedades del usuario
+                                int id = userObject.getInt("id");
+                                String content = userObject.getString("content");
+                                int userIdSend = userObject.getInt("user_id_send");
+                                int userIdReceived = userObject.getInt("user_id_recived");
+                                String timeStampString = userObject.getString("timeStamp");
+
+                                messageList.add(new Message_user(id, content, userIdSend, userIdReceived, timeStampString));
+                            }
+                            if (!lastMessage.getText().equals(messageList.get(messageList.size() - 1).getContent())){
+                                if(!messageList.isEmpty()){
+                                    lastMessage.setText(messageList.get(messageList.size() - 1).getContent());
+                                    lastMessage_time.setText(messageList.get(messageList.size() - 1).getTimeStamp());
+                                }else {
+                                    lastMessage.setText(R.string.empty_chat);
+                                    lastMessage_time.setText("");
+                                }
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        // Manejar el error de la solicitud
+                        if (error.networkResponse != null) {
+                            if(error.networkResponse.statusCode == 400) {
+                                Toast.makeText(activity, R.string.Error_400, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 401) {
+                                Toast.makeText(activity, R.string.Error_401, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 410) {
+                                Toast.makeText(activity, R.string.Error_410, Toast.LENGTH_SHORT).show();
+                            }else if(error.networkResponse.statusCode == 500) {
+                                Toast.makeText(activity, R.string.Error_500, Toast.LENGTH_SHORT).show();
+                            }else if(error.networkResponse.statusCode == 502) {
+                                Toast.makeText(activity, R.string.Error_502, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity, R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(activity, R.string.Error_Network, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
+                return headers;
+            }
+
+        };
+
+        requestQueue.add(jsonArrayRequest);
     }
     public void getLastMessege(Activity activity, RequestQueue requestQueue, int id) {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
@@ -141,7 +229,6 @@ public class FriendsHolder extends RecyclerView.ViewHolder implements View.OnCli
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(activity, ChatActivity.class);
-        user.getId();
         intent.putExtra("User_ID", user.getId());
         intent.putExtra("User_own_id", Integer.parseInt(getUserID()));
         intent.putExtra("token", getFromSharedPrefs());

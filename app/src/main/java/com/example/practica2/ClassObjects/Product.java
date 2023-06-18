@@ -10,6 +10,7 @@ public class Product {
     private String photo;
     private double price;
     private int isActive;
+    private int categoryIdsUnique;
     private List<Integer> categoryIds;
 
     public Product(int id, String name, String description, String link, String photo, double price, int isActive, List<Integer> categoryIds) {

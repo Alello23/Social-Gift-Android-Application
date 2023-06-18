@@ -54,8 +54,8 @@ public class Menu extends AppCompatActivity {
 
         home = new HomeFragment(requestQueue, userID);
         chat = new ChatFragment(requestQueue, userID);
-        wishlists = new WishListFragment(requestQueue, userID);
         account = new AccountFragment(requestQueue, userID);
+        wishlists = new WishListFragment(requestQueue, userID);
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.ME_fragmentContainerView);
@@ -84,7 +84,6 @@ public class Menu extends AppCompatActivity {
             }
             return false;
         });
-
         openFragment(home);
     }
 
@@ -92,6 +91,12 @@ public class Menu extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.ME_fragmentContainerView, fragment);
+        fragmentTransaction.commit();
+    }
+    public void openConfiguration() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.ME_fragmentContainerView, account);
         fragmentTransaction.commit();
     }
 

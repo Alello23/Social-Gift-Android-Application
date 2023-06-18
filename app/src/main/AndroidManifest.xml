@@ -39,6 +39,9 @@
         <activity
             android:name=".Menu.Chats.Chat.ChatActivity"
             android:exported="false"/>
+        <activity
+            android:name=".Menu.Home.Product.ProductActivity"
+            android:exported="false"/>
 
 
     </application>

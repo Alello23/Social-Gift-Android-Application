@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -239,19 +240,31 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            messageList = new ArrayList<>();
+                            List<Message_user> newMessageList = new ArrayList<>();
                             // Iterar sobre los elementos del arreglo JSON
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject userObject = response.getJSONObject(i);
                                 // Obtener los valores de las propiedades del usuario
-                                int id = userObject.getInt("id");
+                                int messageId = userObject.getInt("id");
                                 String content = userObject.getString("content");
                                 int userIdSend = userObject.getInt("user_id_send");
                                 int userIdReceived = userObject.getInt("user_id_recived");
                                 String timeStampString = userObject.getString("timeStamp");
 
-                                messageList.add(new Message_user(id, content, userIdSend, userIdReceived, timeStampString));
+                                newMessageList.add(new Message_user(messageId, content, userIdSend, userIdReceived, timeStampString));
                             }
+                            for (Message_user message : messageList) {
+                                for (Iterator<Message_user> iterator = newMessageList.iterator(); iterator.hasNext();) {
+                                    Message_user newMessage = iterator.next();
+                                    if (newMessage.getId() == message.getId()) {
+                                        iterator.remove();
+                                    }
+                                }
+                            }
+                            // Agregar nuevos mensajes a la lista existente en el adaptador
+                            messageList.addAll(newMessageList);
+                            adapter.notifyDataSetChanged();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

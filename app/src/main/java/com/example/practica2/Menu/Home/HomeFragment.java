@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
 
         categoryList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         shopList.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
+//
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
