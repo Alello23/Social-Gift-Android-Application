@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChatActivity extends AppCompatActivity {
     private ImageView backButton;
@@ -97,6 +99,17 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        Timer timer = new Timer();
+
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                updateMessage_only();
+            }
+        };
+
+        // Programa la tarea para que se ejecute cada 10 segundos
+        timer.schedule(task, 0, 10000);
 
         updateUI();
         updateMessage();
@@ -184,6 +197,61 @@ public class ChatActivity extends AppCompatActivity {
                             list.setAdapter(adapter);
                             list.scrollToPosition(adapter.getItemCount() - 1);
 
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Manejar el error de la solicitud
+                        if (error.networkResponse != null) {
+                            if(error.networkResponse.statusCode == 401) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_401, Toast.LENGTH_SHORT).show();
+                            } else if(error.networkResponse.statusCode == 500) {
+                                Toast.makeText(getApplicationContext(), R.string.Error_500, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.Error_Network, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
+                return headers;
+            }
+
+        };
+        requestQueue.add(jsonArrayRequest);
+    }
+    private void updateMessage_only() {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/messages/" + id;
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            messageList = new ArrayList<>();
+                            // Iterar sobre los elementos del arreglo JSON
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject userObject = response.getJSONObject(i);
+                                // Obtener los valores de las propiedades del usuario
+                                int id = userObject.getInt("id");
+                                String content = userObject.getString("content");
+                                int userIdSend = userObject.getInt("user_id_send");
+                                int userIdReceived = userObject.getInt("user_id_recived");
+                                String timeStampString = userObject.getString("timeStamp");
+
+                                messageList.add(new Message_user(id, content, userIdSend, userIdReceived, timeStampString));
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

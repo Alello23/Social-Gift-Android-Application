@@ -110,6 +110,7 @@ public class AccountFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
         getUserDetails();
         return view;
     }
@@ -216,7 +217,7 @@ public class AccountFragment extends Fragment {
         }
     }
 
-    private void getUserDetails() {
+    public void getUserDetails() {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + userID;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest

@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChatFragment extends Fragment{
     private final String userID;
@@ -51,6 +53,7 @@ public class ChatFragment extends Fragment{
     private TextView myChats_bt;
     private RequestAdapter requestAdapter;
     private FriendsAdapter friendsAdapter;
+    private List<User> allList;
 
 
     public ChatFragment(RequestQueue requestQueue, String userID) {
@@ -77,7 +80,6 @@ public class ChatFragment extends Fragment{
         list = view.findViewById(R.id.FSC_chats_container_FC);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        updateProfileAvatar();
         add_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,14 +118,25 @@ public class ChatFragment extends Fragment{
             }
         });
 
-        updateUIMyFriends();
+        Timer timer = new Timer();
 
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                updateUIMyFriends();
+            }
+        };
+
+        // Programa la tarea para que se ejecute cada 10 segundos
+        timer.schedule(task, 0, 10000);
+
+        updateProfileAvatar();
         return view;
     }
     private void performSearch(String query){
 
     }
-    private void updateProfileAvatar() {
+    public void updateProfileAvatar() {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + userID;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -176,7 +189,8 @@ public class ChatFragment extends Fragment{
 
                                 userList.add(new User(id,name,lastName,email,image));
                             }
-                            friendsAdapter = new FriendsAdapter(userList, getActivity(), requestQueue);
+                            allList = userList;
+                            friendsAdapter = new FriendsAdapter(allList, getActivity(), requestQueue);
                             list.setAdapter(friendsAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();

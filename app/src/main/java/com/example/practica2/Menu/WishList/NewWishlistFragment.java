@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import java.util.Map;
 public class NewWishlistFragment extends Fragment {
     private EditText editTextTitle;
     private EditText editTextDescription;
+    private ImageView back_bt;
     private Button openDatePickerButton;
     private Button openTimePickerButton;
     private Button createWishlistButton;
@@ -61,6 +63,16 @@ public class NewWishlistFragment extends Fragment {
 
         editTextTitle = view.findViewById(R.id.NW_editText_Title); // Replace with actual ID
         editTextDescription = view.findViewById(R.id.NW_editText_Description); // Replace with actual ID
+        back_bt = view.findViewById(R.id.NW_button_back);
+        back_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.ME_fragmentContainerView, wishListFragment);
+                fragmentTransaction.commit();
+            }
+        });
 
         openDatePickerButton = view.findViewById(R.id.NW_openPopupButton_date);
         openDatePickerButton.setOnClickListener(new View.OnClickListener() {

@@ -84,7 +84,7 @@ public class WishListFragment extends Fragment {
 
         return view;
     }
-    private void updateProfileAvatar() {
+    public void updateProfileAvatar() {
         String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/users/" + userID;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest

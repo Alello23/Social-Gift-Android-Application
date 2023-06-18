@@ -57,6 +57,7 @@ public class NewProductFragment extends Fragment {
     private EditText priceEditText;
     private EditText title;
     private EditText description;
+    private ImageView back_bt;
     private ImageView imageView;
     private Button create;
     private String[] categoryOptions = {"Electronics", "Clothing", "Books"};
@@ -83,7 +84,16 @@ public class NewProductFragment extends Fragment {
         create = view.findViewById(R.id.NP_button_Create);
         imageView = view.findViewById(R.id.NP_imageNewProduct);
         UrlImage = "https://balandrau.salle.url.edu/i3/repositoryimages/photo/47601a8b-dc7f-41a2-a53b-19d2e8f54cd0.png";
-
+        back_bt = view.findViewById(R.id.NP_button_back);
+        back_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.ME_fragmentContainerView, homeFragment);
+                fragmentTransaction.commit();
+            }
+        });
 
         categoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
