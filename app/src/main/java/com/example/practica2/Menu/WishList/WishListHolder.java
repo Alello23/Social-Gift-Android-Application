@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -54,6 +55,8 @@ public class WishListHolder extends RecyclerView.ViewHolder  implements View.OnC
     private WishListsFragment wishListFragment;
     private TextView date;
     private ImageView save;
+    private List<WishList> wishListList;
+    private WishListAdapter wishListAdapter;
 
     public WishListHolder(LayoutInflater inflater, ViewGroup parent, Activity activity, WishListsFragment wishListFragment) {
         super(inflater.inflate(R.layout.element_wishlist, parent, false));
@@ -68,12 +71,14 @@ public class WishListHolder extends RecyclerView.ViewHolder  implements View.OnC
         this.activity = activity;
     }
 
-    public void bind(WishList wishList, RequestQueue requestQueue) {
+    public void bind(WishList wishList, RequestQueue requestQueue, WishListAdapter wishListAdapter,List<WishList> wishListList) {
         this.wishList = wishList;
         this.requestQueue = requestQueue;
         title.setText(wishList.getName());
         description.setText(wishList.getDescription());
         String endDate = wishList.getEndDate();
+        this.wishListList = wishListList;
+        this.wishListAdapter = wishListAdapter;
 
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
@@ -194,8 +199,7 @@ public class WishListHolder extends RecyclerView.ViewHolder  implements View.OnC
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // 删除成功后刷新列表
-                        wishListFragment.getAllWishlists();
+                        removeWishlistFromList();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -221,6 +225,14 @@ public class WishListHolder extends RecyclerView.ViewHolder  implements View.OnC
         };
 
         requestQueue.add(jsonObjectRequest);
+    }
+    public void removeWishlistFromList() {
+        // Eliminar el regalo de la lista
+        int position = getAdapterPosition();
+        if (position != RecyclerView.NO_POSITION) {
+            wishListList.remove(position);
+            wishListAdapter.notifyItemRemoved(position);
+        }
     }
     private void save() {
         JSONObject jsonParams = new JSONObject();

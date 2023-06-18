@@ -30,7 +30,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListHolder> {
     @Override
     public void onBindViewHolder(WishListHolder holder, int position) {
         WishList wishList = wishLists.get(position);
-        holder.bind(wishList, requestQueue);
+        holder.bind(wishList, requestQueue, this,wishLists);
     }
     @Override
     public int getItemCount() {

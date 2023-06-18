@@ -49,9 +49,6 @@
             android:name=".Menu.WishList.GiftList.GiftListActivity"
             android:exported="false"/>
 
-        <activity
-            android:name=".Menu.Chats.Chat.wishList.wishListActivityOthers"
-            android:exported="false"/>
 
         <meta-data
             android:name="preloaded_fonts"
