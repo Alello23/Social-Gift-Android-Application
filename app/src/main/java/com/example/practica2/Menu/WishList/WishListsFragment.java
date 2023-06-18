@@ -2,17 +2,19 @@ package com.example.practica2.Menu.WishList;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,7 +29,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.practica2.ClassObjects.CircleImage;
 import com.example.practica2.ClassObjects.Gift;
 import com.example.practica2.ClassObjects.WishList;
-import com.example.practica2.Menu.Home.WishListAdapter;
+import com.example.practica2.Login_Register.MainActivity;
+import com.example.practica2.Menu.Account.AccountFragment;
 import com.example.practica2.R;
 import com.squareup.picasso.Picasso;
 
@@ -40,9 +43,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WishListFragment extends Fragment {
+public class WishListsFragment extends Fragment {
     private ImageView addWishListButton;
-    private WishListFragment wishListFragment;
+    private WishListsFragment wishListFragment;
     private RequestQueue requestQueue;
     private RecyclerView recyclerView;
     private WishListAdapter wishListAdapter;
@@ -50,7 +53,7 @@ public class WishListFragment extends Fragment {
     private List<WishList> wishLists;
     private String userID;
 
-    public WishListFragment(RequestQueue requestQueue, String userID) {
+    public WishListsFragment(RequestQueue requestQueue, String userID) {
         wishListFragment = this;
         this.requestQueue = requestQueue;
 
@@ -69,7 +72,34 @@ public class WishListFragment extends Fragment {
         wishLists = new ArrayList<>();
         avatar = view.findViewById(R.id.WIS_avatarImage_FC);
 
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), v);
+                popupMenu.getMenuInflater().inflate(R.menu.user_option, popupMenu.getMenu());
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getItemId() == R.id.menu_item_1) {
+                            // Acción para la opción 1
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.ME_fragmentContainerView, new AccountFragment(requestQueue, userID));
+                            fragmentTransaction.commit();
+                            return true;
+                        }else if(item.getItemId() == R.id.menu_item_2) {
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+            }
 
+        });
         addWishListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +147,7 @@ public class WishListFragment extends Fragment {
 
         requestQueue.add(jsonObjectRequest);
     }
-    private void getAllWishlists() {
+    public void getAllWishlists() {
             String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
 
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
@@ -141,7 +171,7 @@ public class WishListFragment extends Fragment {
                                         wishLists.add(wishList);
                                     }
                                 }
-                                wishListAdapter = new WishListAdapter(wishLists, getActivity(), requestQueue);
+                                wishListAdapter = new WishListAdapter(wishLists, getActivity(), requestQueue, WishListsFragment.this);
                                 recyclerView.setAdapter(wishListAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();

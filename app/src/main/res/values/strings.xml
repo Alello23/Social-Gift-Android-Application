@@ -80,10 +80,24 @@
 
     <!-- Chats -->
     <string name="empty_chat">Start a conversation!</string>
+    <string name="My_Chats">My Chats</string>
+    <string name="Gifts_Chat">Gifts Chat</string>
+    <string name="Request">Request</string>
 
     <!-- Product info -->
     <string name="product_description">Description</string>
     <string name="product_add_to_wishlist">Add to WishList</string>
+
+    <!-- General -->
+    <string name="search_hint">Search</string>
+
+    <!-- SubMenu_user -->
+    <string name="log_out">Log out</string>
+    <string name="Configuration">Configuration</string>
+
+    <!-- SubMenu_wishlist -->
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
 
     <!-- Error -->

@@ -9,7 +9,7 @@
         android:id="@+id/WI_view"
         android:layout_width="match_parent"
         android:layout_height="177dp"
-        android:background="@drawable/rounded_corners"
+        android:background="@drawable/stroke_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,9 +25,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/more_option" />
 
-
-    <TextView
+    <EditText
         android:id="@+id/WI_title"
+        android:enabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -37,27 +37,62 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="150dp"
         android:background="@android:color/transparent"
-        android:text="TextView"
-        android:textColor="@color/white"
-        android:textSize="14sp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="EditText"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toStartOf="@+id/WI_more_option"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/WI_End_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="15dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="end"
+        android:text="TextView"
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/WI_title"
+        app:layout_constraintEnd_toStartOf="@+id/WI_more_option"
+        app:layout_constraintTop_toTopOf="@+id/WI_title" />
+
+    <EditText
         android:id="@+id/WI_description"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:layout_marginBottom="10dp"
-        android:text="TextView"
-        android:textColor="@android:color/white"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/WI_view"
+        android:layout_marginEnd="3dp"
+        android:enabled="false"
+        android:fontFamily="@font/montserrat_extralight_italic"
+        android:gravity="top"
+        android:text="EditText"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/WI_more_option"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/WI_title"
         app:layout_constraintTop_toBottomOf="@+id/WI_title" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/WI_save"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WI_more_option"
+        app:srcCompat="@drawable/accept_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

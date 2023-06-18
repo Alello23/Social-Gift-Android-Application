@@ -7,18 +7,6 @@ public class Category {
     private String photo;
     private int categoryParentId;
 
-    public String getName() {
-        return name;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public int getId() {
-        return id;
-    }
-
     public Category(int id, String name, String description, String photo, int categoryParentId) {
         this.id = id;
         this.name = name;
@@ -26,5 +14,24 @@ public class Category {
         this.photo = photo;
         this.categoryParentId = categoryParentId;
     }
-}
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public int getCategoryParentId() {
+        return categoryParentId;
+    }
+}

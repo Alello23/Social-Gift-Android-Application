@@ -2,13 +2,16 @@ package com.example.practica2.Menu.Home;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -29,8 +32,11 @@ import com.example.practica2.ClassObjects.Category;
 import com.example.practica2.ClassObjects.CircleImage;
 import com.example.practica2.ClassObjects.Product;
 import com.example.practica2.ClassObjects.User;
+import com.example.practica2.Login_Register.MainActivity;
+import com.example.practica2.Menu.Account.AccountFragment;
 import com.example.practica2.Menu.Chats.AddFriend.AllUserAdapter;
 import com.example.practica2.Menu.Chats.AddFriend.NewFriendActivity;
+import com.example.practica2.Menu.Menu;
 import com.example.practica2.Menu.WishList.NewWishlistFragment;
 import com.example.practica2.R;
 import com.squareup.picasso.Picasso;
@@ -57,7 +63,6 @@ public class HomeFragment extends Fragment {
     private RequestQueue requestQueue;
     private HomeFragment homeFragment;
     private String userID;
-
     public HomeFragment(RequestQueue requestQueue, String userID) {
         this.requestQueue = requestQueue;
         homeFragment = this;
@@ -79,12 +84,40 @@ public class HomeFragment extends Fragment {
 
         categoryList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         shopList.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-//
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchView.onActionViewExpanded();
             }
+        });
+
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), v);
+                popupMenu.getMenuInflater().inflate(R.menu.user_option, popupMenu.getMenu());
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getItemId() == R.id.menu_item_1) {
+                            // Acción para la opción 1
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.ME_fragmentContainerView, new AccountFragment(requestQueue,userID));
+                            fragmentTransaction.commit();
+                            return true;
+                        }else if(item.getItemId() == R.id.menu_item_2) {
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+            }
+
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

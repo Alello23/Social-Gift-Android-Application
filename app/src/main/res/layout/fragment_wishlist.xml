@@ -6,30 +6,17 @@
     android:layout_height="match_parent">
 
 
-
-    <ImageView
-        android:id="@+id/WIT_avatarImage_FC"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="19dp"
-        android:background="@drawable/circle_background"
-        android:contentDescription="Avatar"
-        android:src="@drawable/default_avatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/WIT_text_WishList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_semibold"
         android:text="@string/Title_wishlist"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/WIT_avatarImage_FC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/WIT_avatarImage_FC" />
+        tools:layout_editor_absoluteY="40dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/WIT_input_gift"
@@ -38,8 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/WIT_avatarImage_FC"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/WIT_button_back" />
 
     <ImageView
         android:id="@+id/WIT_button_back"

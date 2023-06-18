@@ -1,4 +1,4 @@
-package com.example.practica2.Menu.Home;
+package com.example.practica2.Menu.WishList;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,31 +7,29 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
-import com.example.practica2.ClassObjects.Category;
-import com.example.practica2.ClassObjects.User;
 import com.example.practica2.ClassObjects.WishList;
-import com.example.practica2.Menu.Chats.RequestHolder;
-import com.example.practica2.Menu.WishList.WishListItemViewHolder;
 
 import java.util.List;
 
-public class WishListAdapter extends RecyclerView.Adapter<WishListItemViewHolder> {
+public class WishListAdapter extends RecyclerView.Adapter<WishListHolder> {
     private List<WishList> wishLists;
     private Activity activity;
     private RequestQueue requestQueue;
-    public WishListAdapter(List<WishList> wishLists, Activity activity, RequestQueue requestQueue) {
+    private WishListsFragment wishListFragment;
+    public WishListAdapter(List<WishList> wishLists, Activity activity, RequestQueue requestQueue, WishListsFragment wishListFragment) {
         this.wishLists = wishLists;
         this.activity = activity;
         this.requestQueue = requestQueue;
+        this.wishListFragment = wishListFragment;
     }
 
     @Override
-    public WishListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WishListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(activity);
-        return new WishListItemViewHolder(layoutInflater, parent, activity);
+        return new WishListHolder(layoutInflater, parent, activity, wishListFragment);
     }
     @Override
-    public void onBindViewHolder(WishListItemViewHolder holder, int position) {
+    public void onBindViewHolder(WishListHolder holder, int position) {
         WishList wishList = wishLists.get(position);
         holder.bind(wishList, requestQueue);
     }

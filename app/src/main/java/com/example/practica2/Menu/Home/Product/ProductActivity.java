@@ -25,12 +25,16 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.practica2.ClassObjects.CircleImage;
+import com.example.practica2.ClassObjects.Gift;
 import com.example.practica2.ClassObjects.Message_user;
 import com.example.practica2.ClassObjects.Product;
 import com.example.practica2.ClassObjects.RoundedCornerTransformation;
 import com.example.practica2.ClassObjects.User;
+import com.example.practica2.ClassObjects.WishList;
 import com.example.practica2.Menu.Chats.AddFriend.AllUserAdapter;
 import com.example.practica2.Menu.Chats.AddFriend.NewFriendActivity;
+import com.example.practica2.Menu.WishList.WishListAdapter;
+import com.example.practica2.Menu.WishList.WishListsFragment;
 import com.example.practica2.R;
 import com.squareup.picasso.Picasso;
 
@@ -56,6 +60,8 @@ public class ProductActivity extends AppCompatActivity {
     private int id;
     private Product product;
     private RequestQueue requestQueue;
+    private List<WishList> wishLists;
+    private String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +71,7 @@ public class ProductActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(ProductActivity.this);
         id = getIntent().getIntExtra("Product_ID", -1);
-
+        userID = getIntent().getStringExtra("User_ID");
         addWishlistProduct = findViewById(R.id.PR_button_AddtoWishList);
         description = findViewById(R.id.PR_description);
 
@@ -171,6 +177,53 @@ public class ProductActivity extends AppCompatActivity {
         };
         requestQueue.add(jsonObjectRequest);
 
+    }
+    public void getAllWishlists() {
+        String url = "https://balandrau.salle.url.edu/i3/socialgift/api/v1/wishlists";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject wishlistObject = response.getJSONObject(i);
+                                int id = wishlistObject.getInt("id");
+                                String name = wishlistObject.getString("name");
+                                String description = wishlistObject.getString("description");
+                                int userId = wishlistObject.getInt("user_id");
+                                String creationDate = wishlistObject.getString("creation_date");
+                                String endDate = wishlistObject.getString("end_date");
+
+                                List<Gift> gifts = new ArrayList<>();
+                                if (userId == Integer.parseInt(userID)){
+                                    WishList wishList = new WishList(id, name, description, userId, gifts, creationDate, endDate);
+                                    wishLists.add(wishList);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(ProductActivity.this, "Error getting wishlists", Toast.LENGTH_SHORT).show();
+                    }
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + getFromSharedPrefs());
+                return headers;
+            }};
+
+        requestQueue.add(jsonArrayRequest);
     }
     private void loadInfo (Product product){
         name.setText(product.getName());

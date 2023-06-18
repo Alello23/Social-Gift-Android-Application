@@ -60,6 +60,7 @@ public class ProductHolder extends RecyclerView.ViewHolder implements View.OnCli
         Intent intent = new Intent(activity, ProductActivity.class);
         intent.putExtra("Product_ID", product.getId());
         intent.putExtra("token", getFromSharedPrefs());
+        intent.putExtra("User_ID", getFromSharedPrefsUser());
         activity.startActivity(intent);
     }
     public void bind(Product product, RequestQueue requestQueue) {
@@ -76,6 +77,11 @@ public class ProductHolder extends RecyclerView.ViewHolder implements View.OnCli
     private String getFromSharedPrefs() {
         SharedPreferences sharedPrefs = activity.getPreferences(MODE_PRIVATE);
         String valor = sharedPrefs.getString("token", "default");
+        return valor;
+    }
+    private String getFromSharedPrefsUser() {
+        SharedPreferences sharedPrefs = activity.getPreferences(MODE_PRIVATE);
+        String valor = sharedPrefs.getString("user_id", "default");
         return valor;
     }
 

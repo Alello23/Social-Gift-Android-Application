@@ -9,10 +9,10 @@ import android.graphics.Shader;
 import com.squareup.picasso.Transformation;
 
 public class CircleImage implements Transformation {
+
     @Override
     public Bitmap transform(Bitmap source) {
         int size = Math.min(source.getWidth(), source.getHeight());
-
         int x = (source.getWidth() - size) / 2;
         int y = (source.getHeight() - size) / 2;
 
@@ -22,9 +22,9 @@ public class CircleImage implements Transformation {
         }
 
         Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
-
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
+
         BitmapShader shader = new BitmapShader(squaredBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         paint.setShader(shader);
         paint.setAntiAlias(true);

@@ -49,12 +49,16 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_GALLERY = 1;
     private Uri imageUri;
     private String UrlImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        // Inicialización de la cola de solicitudes
         requestQueue = Volley.newRequestQueue(SignUpActivity.this);
+
+        // Inicialización de variables y referencias a los elementos de la interfaz de usuario
         UrlImage = "https://balandrau.salle.url.edu/i3/repositoryimages/photo/47601a8b-dc7f-41a2-a53b-19d2e8f54cd0.png";
         NameBox = findViewById(R.id.SU_NameBox);
         LastNameBox = findViewById(R.id.SU_LastNameBox);
@@ -63,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
         AvatarBox = findViewById(R.id.SU_AvatarImageView);
         AvatarBox.setImageResource(R.drawable.default_avatar);
 
+        // Configuración del evento de clic para seleccionar una imagen
         AvatarBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,36 +75,36 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        // Configuración del evento de clic para el botón de registro
         SignUp = findViewById(R.id.SU_SignUp_Button);
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Post
+                // Se realiza la solicitud de registro
                 postSignUpData();
             }
         });
 
+        // Configuración del evento de clic para el enlace de inicio de sesión
         signInLink = findViewById(R.id.SU_SignInLink);
         signInLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Acción a realizar cuando se hace clic en el enlace
+                // Se inicia la actividad de inicio de sesión y se finaliza la actividad actual
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
+
     private void selectImage() {
-        // Aquí abres la galería o la cámara para seleccionar una imagen
-        // Puedes implementar tu propia lógica para abrir la galería o la cámara
-        // A continuación, se muestra un ejemplo básico
-
-        // Verificar permisos de almacenamiento si es necesario
-
-        // Abrir la galería
+        // Abre la galería para seleccionar una imagen
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_GALLERY);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -108,7 +113,7 @@ public class SignUpActivity extends AppCompatActivity {
             // La imagen se seleccionó exitosamente desde la galería
             // Obtener la URI de la imagen seleccionada
             imageUri = data.getData();
-            // Utilizar Picasso para cargar y mostrar la imagen en el ImageView
+            // Cargar y mostrar la imagen en el ImageView utilizando Picasso
             Picasso.get().load(imageUri).transform(new CircleImage()).into(AvatarBox);
         }
     }
@@ -122,13 +127,15 @@ public class SignUpActivity extends AppCompatActivity {
             ImgurUploader.uploadImage(imageBitmap, new ImgurUploader.ImgurUploadListener() {
                 @Override
                 public void onSuccess(String imageUrl) {
+                    // La imagen se ha subido correctamente, se obtiene la URL de la imagen
                     UrlImage = imageUrl;
+                    // Se crea la cuenta de usuario con la URL de la imagen
                     newAccount();
                 }
 
                 @Override
                 public void onError(String error) {
-                    // Aquí manejas el error al subir la imagen
+                    // Manejo del error al subir la imagen
                     // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales
                     Log.e("error","error");
                 }
@@ -137,7 +144,9 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void newAccount (){
+        // Crear un objeto JSON con los datos del usuario
         JSONObject jsonParams = new JSONObject();
         try {
             jsonParams.put("name", NameBox.getText().toString());
@@ -154,7 +163,9 @@ public class SignUpActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        // La solicitud de registro fue exitosa
                         Toast.makeText(getApplicationContext(), "Sign up successful", Toast.LENGTH_SHORT).show();
+                        // Se inicia la actividad principal y se finaliza la actividad actual
                         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -163,6 +174,7 @@ public class SignUpActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        // Manejo de errores en la respuesta de la solicitud
                         if (error.networkResponse != null) {
                             if(error.networkResponse.statusCode == 400) {
                                 Toast.makeText(getApplicationContext(), R.string.Error_400, Toast.LENGTH_SHORT).show();
@@ -189,13 +201,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void postSignUpData() {
         if (imageUri != null){
+            // Si se seleccionó una imagen, se sube a Imgur y luego se crea la cuenta de usuario
             UploadImage();
-        }else{
-           newAccount();
+        } else {
+            // Si no se seleccionó una imagen, se crea la cuenta de usuario con la imagen predeterminada
+            newAccount();
         }
     }
+
     @Override
     public void onBackPressed() {
-    //No hace nada
+        // No hace nada
     }
 }

@@ -27,29 +27,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/AC_guideline" />
 
-        <TextView
-            android:id="@+id/AC_log_out_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="272dp"
-            android:layout_marginTop="28dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/logout"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+   <TextView
+       android:id="@+id/AC_log_out_button"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="272dp"
+       android:layout_marginTop="28dp"
+       android:fontFamily="@font/montserrat_semibold"
+       android:text="@string/logout"
+       android:textColor="@android:color/white"
+       android:textSize="20sp"
+       android:textStyle="normal"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/AC_log_out_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="28dp"
-            app:layout_constraintStart_toEndOf="@+id/AC_log_out_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/exit_image" />
+   <ImageView
+       android:id="@+id/AC_log_out_icon"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="12dp"
+       app:layout_constraintBottom_toBottomOf="@+id/AC_log_out_button"
+       app:layout_constraintStart_toEndOf="@+id/AC_log_out_button"
+       app:layout_constraintTop_toTopOf="@+id/AC_log_out_button"
+       app:srcCompat="@drawable/exit_image" />
 
         <TextView
             android:id="@+id/AC_name_title"

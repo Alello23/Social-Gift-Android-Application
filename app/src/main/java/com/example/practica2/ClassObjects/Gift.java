@@ -15,46 +15,47 @@ public class Gift {
         this.booked = booked;
     }
 
-    // Getters and Setters
+    // Getters
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getWishlistId() {
         return wishlistId;
     }
 
-    public void setWishlistId(int wishlistId) {
-        this.wishlistId = wishlistId;
-    }
-
     public String getProductUrl() {
         return productUrl;
-    }
-
-    public void setProductUrl(String productUrl) {
-        this.productUrl = productUrl;
     }
 
     public int getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
     public boolean isBooked() {
         return booked;
+    }
+
+    // Setters
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setWishlistId(int wishlistId) {
+        this.wishlistId = wishlistId;
+    }
+
+    public void setProductUrl(String productUrl) {
+        this.productUrl = productUrl;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     public void setBooked(boolean booked) {
         this.booked = booked;
     }
 }
-

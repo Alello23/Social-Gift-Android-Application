@@ -1,11 +1,7 @@
 package com.example.practica2.Login_Register;
 
-import static android.app.PendingIntent.getActivity;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +23,6 @@ import com.example.practica2.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-
 public class MainActivity extends AppCompatActivity {
     private Button SignIn;
     private TextView ChangeBox;
@@ -41,24 +35,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        // Inicialización de la cola de solicitudes
         requestQueue = Volley.newRequestQueue(MainActivity.this);
 
+        // Obtención de referencias a los elementos de la interfaz de usuario
         SignIn = findViewById(R.id.SI_SignIn_Button);
         ChangeBox = findViewById(R.id.SI_SignUpLabel);
         UserName = findViewById(R.id.SI_NameBox);
         Password = findViewById(R.id.SI_PasswordBox);
 
+        // Configuración del evento de clic para cambiar a la pantalla de registro
         ChangeBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Acción a realizar cuando se hace clic en el texto
-                // Puedes colocar aquí el código que deseas ejecutar al hacer clic
+                // Se inicia la actividad de registro y se finaliza la actividad actual
                 Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
+        // Configuración del evento de clic para el botón de inicio de sesión
         SignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,12 +64,14 @@ public class MainActivity extends AppCompatActivity {
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     // El correo electrónico ingresado no es válido
                     Toast.makeText(getApplicationContext(), R.string.Error_Email, Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
+                    // Se realiza la solicitud de inicio de sesión
                     makeRequest();
                 }
             }
         });
     }
+
     private void makeRequest() {
         // Crea un objeto JSON con los parámetros de inicio de sesión
         JSONObject jsonParams = new JSONObject();
@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        // La solicitud fue exitosa
+                        // Se inicia la actividad del menú y se pasa el token de acceso
                         Intent intent = new Intent(MainActivity.this, Menu.class);
                         try {
                             intent.putExtra("User", response.getString("accessToken"));
@@ -102,12 +103,13 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        // Se manejan los errores de la respuesta de la solicitud
                         if (error.networkResponse != null) {
-                            if(error.networkResponse.statusCode == 400) {
+                            if (error.networkResponse.statusCode == 400) {
                                 Toast.makeText(getApplicationContext(), R.string.Error_400, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 401) {
+                            } else if (error.networkResponse.statusCode == 401) {
                                 Toast.makeText(getApplicationContext(), R.string.Error_401, Toast.LENGTH_SHORT).show();
-                            } else if(error.networkResponse.statusCode == 406) {
+                            } else if (error.networkResponse.statusCode == 406) {
                                 Toast.makeText(getApplicationContext(), R.string.Error_406, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), R.string.Error_Default, Toast.LENGTH_SHORT).show();
@@ -119,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 });
         requestQueue.add(request);
     }
+
     @Override
     public void onBackPressed() {
-    // No hace nada
+        // No hace nada
     }
-
 }

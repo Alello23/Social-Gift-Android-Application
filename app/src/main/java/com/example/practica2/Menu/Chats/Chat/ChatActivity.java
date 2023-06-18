@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class ChatActivity extends AppCompatActivity {
     private ImageView avatar;
     private ImageView sendBT;
     private TextView name;
+    private TextView description;
     private EditText input;
     private int id;
     private int ownID;
@@ -69,6 +71,7 @@ public class ChatActivity extends AppCompatActivity {
         sendBT = findViewById(R.id.CH_send_bt);
 
         name = findViewById(R.id.CH_nameText);
+        description = findViewById(R.id.CH_subnameText);
         avatar = findViewById(R.id.CH_avatarImage);
 
         backButton = findViewById(R.id.CH_back_button);
@@ -76,8 +79,6 @@ public class ChatActivity extends AppCompatActivity {
         input = findViewById(R.id.CH_messageEditText);
 
         list.setLayoutManager(new LinearLayoutManager(ChatActivity.this));
-
-
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +127,7 @@ public class ChatActivity extends AppCompatActivity {
                                 // Obtener los valores de las propiedades del usuario
                         try {
                             name.setText(response.getString("name"));
+                            description.setText(response.getString("last_name"));
                             try {
                                 Picasso.get().load(response.getString("image")).transform(new CircleImage()).into(avatar);
                             }catch (Exception e){
