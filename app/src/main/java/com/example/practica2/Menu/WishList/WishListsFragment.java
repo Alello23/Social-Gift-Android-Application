@@ -58,7 +58,6 @@ public class WishListsFragment extends Fragment {
         this.requestQueue = requestQueue;
 
         this.userID = userID;
-        // Constructor público requerido vacío
     }
 
     @Override

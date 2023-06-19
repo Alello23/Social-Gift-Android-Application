@@ -74,14 +74,12 @@ public class AccountFragment extends Fragment {
         deleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Aquí puedes implementar la acción que deseas realizar al hacer clic en el texto
                 deleteUser();
             }
         });
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Aquí puedes implementar la acción que deseas realizar al hacer clic en el texto
                 selectImage();
             }
         });
@@ -115,12 +113,6 @@ public class AccountFragment extends Fragment {
         return view;
     }
     private void selectImage() {
-        // Aquí abres la galería o la cámara para seleccionar una imagen
-        // Puedes implementar tu propia lógica para abrir la galería o la cámara
-        // A continuación, se muestra un ejemplo básico
-
-        // Verificar permisos de almacenamiento si es necesario
-
         // Abrir la galería
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_GALLERY);

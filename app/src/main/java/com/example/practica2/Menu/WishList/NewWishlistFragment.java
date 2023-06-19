@@ -53,7 +53,6 @@ public class NewWishlistFragment extends Fragment {
     public NewWishlistFragment(WishListsFragment wishListFragment, RequestQueue requestQueue) {
         this.wishListFragment = wishListFragment;
         this.requestQueue = requestQueue;
-        // Constructor público requerido vacío
     }
 
     @Override

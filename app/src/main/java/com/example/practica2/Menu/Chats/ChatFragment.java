@@ -149,8 +149,6 @@ public class ChatFragment extends Fragment{
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Acciones a realizar cuando el texto de búsqueda cambia
-                // Puedes realizar una búsqueda en tiempo real aquí
                 return false;
             }
         });

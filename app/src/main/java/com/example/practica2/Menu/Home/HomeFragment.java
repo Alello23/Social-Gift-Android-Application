@@ -67,7 +67,6 @@ public class HomeFragment extends Fragment {
         this.requestQueue = requestQueue;
         homeFragment = this;
         this.userID = userID;
-        // Constructor público requerido vacío
     }
 
     @Override

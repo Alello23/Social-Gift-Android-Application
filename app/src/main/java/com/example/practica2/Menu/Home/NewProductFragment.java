@@ -69,7 +69,6 @@ public class NewProductFragment extends Fragment {
     public NewProductFragment(HomeFragment homeFragment, RequestQueue requestQueue) {
         this.homeFragment = homeFragment;
         this.requestQueue = requestQueue;
-        // Constructor público requerido vacío
     }
 
     @Override
@@ -124,12 +123,6 @@ public class NewProductFragment extends Fragment {
         return view;
     }
     private void selectImage() {
-        // Aquí abres la galería o la cámara para seleccionar una imagen
-        // Puedes implementar tu propia lógica para abrir la galería o la cámara
-        // A continuación, se muestra un ejemplo básico
-
-        // Verificar permisos de almacenamiento si es necesario
-
         // Abrir la galería
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_GALLERY);
@@ -162,8 +155,6 @@ public class NewProductFragment extends Fragment {
 
                 @Override
                 public void onError(String error) {
-                    // Aquí manejas el error al subir la imagen
-                    // Puedes mostrar un mensaje de error al usuario o realizar acciones adicionales
                     Log.e("error","error");
                 }
             });
@@ -310,9 +301,6 @@ public class NewProductFragment extends Fragment {
                 categoryButton.setText(selectedCategory.getName());
 
                 categoryId = selectedCategory.getId();
-                // Aquí puedes hacer lo que necesites con el categoryId
-                // Por ejemplo, puedes llamar a una función getCategoryId(categoryId)
-
             }
         });
 
