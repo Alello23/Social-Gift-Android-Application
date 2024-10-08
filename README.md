@@ -1,8 +1,8 @@
 # Social Gift Android Application
 
-This repository contains an Android project for "Social Gift", a gift management app for La Salle - Universitat Ramon Llull. The project was developed by Alex Liu and Andi Tang.
+This repository contains an Android project for "Social Gift", a gift management app for La Salle - Universitat Ramon Llull. The project was developed by Alex Liu
 
-- Email: alex.liu@students.salle.url.edu, andi.tang@students.salle.url.edu
+- Email: alex.liu@students.salle.url.edu
 - GitHub: https://github.com/Alello23/Practica_2.git
 
 ## About The Project
@@ -62,7 +62,6 @@ See the [open issues](https://github.com/Alello23/Practica_2/issues) for a list 
 ## Contact
 
 Alex Liu - alex.liu@students.salle.url.edu
-Andi Tang - andi.tang@students.salle.url.edu
 Project Link: https://github.com/Alello23/Practica_2.git
 
 ## Acknowledgements
