@@ -1,5 +1,5 @@
 # Social Gift Android Application
-
+![Mi proyecto](assets/SocialGift.jpeg)
 This repository contains an Android project for "Social Gift", a gift management app for La Salle - Universitat Ramon Llull. The project was developed by Alex Liu
 
 - Email: alex.liu@students.salle.url.edu
